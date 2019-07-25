@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>PaymentPlanSearch</NAME>
+        <LABEL>Payment Plan Search</LABEL>
+
+        <PROPERTY>
+            <NAME>PaymentPlanID</NAME>
+            <LABEL>PaymentPlan ID</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <WIDTH>10</WIDTH>
+            <HELP>A unique identifier for this bill cycle.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN nad MAX instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id" />
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>The service provider identifier.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Payment Plan Name</LABEL>
+            <WIDTH>60</WIDTH>
+            <HELP>A name to help identify the payment plan.</HELP>
+        </PROPERTY>
+
+    </ENTITY>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>PaymentPlanHistorySearch</NAME>
+        <LABEL>Payment Plan History Search</LABEL>
+        <IMPORT>java.util.Date</IMPORT>
+
+        <PROPERTY>
+            <NAME>accountId</NAME>
+            <LABEL>Account ID</LABEL>
+            <REFERENCE model="com.redknee.app.crm.bean.payment.PaymentPlanHistory" property="accountId" />
+            <HELP>The Account associated with the Payment Plan Activity. </HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>startDate</NAME>
+            <LABEL>Start Search Period</LABEL>
+            <TYPE>Date</TYPE>
+            <DEFAULT>null</DEFAULT>
+            <HELP>The date and time which this Payment Plan Activity occurred.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>endDate</NAME>
+            <LABEL>End Search Period</LABEL>
+            <TYPE>Date</TYPE>
+            <DEFAULT>null</DEFAULT>
+            <HELP>The date and time which this Payment Plan Activity occurred.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>limit</NAME>
+            <TYPE>int</TYPE>
+            <WIDTH>4</WIDTH>
+            <DEFAULT>25</DEFAULT>
+            <MIN>1</MIN>
+            <MAX>1000</MAX>
+            <HELP>The maximum number of records to retrieve.</HELP>
+        </PROPERTY>
+
+    </ENTITY>
+
+</MODEL>

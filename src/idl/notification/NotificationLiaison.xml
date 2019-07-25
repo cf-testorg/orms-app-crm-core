@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.notification.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.core.cron.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.lifecycle.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.pipe.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.liaison</PACKAGE>
+        <PATH>liaison</PATH>
+        
+        <NAME>RealTimeNotificationLiaison</NAME>
+        <LABEL>Real-Time Notification Liaison</LABEL>
+        
+        <EXTENDS>AbstractNotificationLiaison</EXTENDS>
+        
+        <HELP>This liaison generates and delivers messages immediately.</HELP>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.liaison</PACKAGE>
+        <PATH>liaison</PATH>
+        
+        <NAME>ScheduledTaskNotificationLiaison</NAME>
+        <LABEL>Scheduled Task Notification Liaison</LABEL>
+        
+        <EXTENDS>RealTimeNotificationLiaison</EXTENDS>
+        
+        <HELP>This liaison generates messages immediately and stores them in a ScheduledNotification home for delivery according to a schedule.</HELP>
+        
+        <PROPERTY>
+            <NAME>liaisonSchedule</NAME>
+            <WIDTH>LiaisonSchedule.SCHEDULENAME_WIDTH</WIDTH>
+            <web-control>new LiaisonScheduleKeyWebControl()</web-control>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.liaison</PACKAGE>
+        <PATH>liaison</PATH>
+        
+        <NAME>NotificationLiaisonProxy</NAME>
+        <IMPLEMENTS>NotificationLiaison</IMPLEMENTS>
+        <EXTENDS>AbstractNotificationLiaison</EXTENDS>
+        
+        <HELP>This liaison proxies to a delegate implementation.</HELP>
+        
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">NotificationLiaison</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(NotificationLiaison.class).setOptional(true)</web-control>
+            <GetBody>
+                <![CDATA[
+                NotificationLiaison delegate = delegate_;
+                if (delegate == null)
+                {
+                    delegate = NullNotificationLiaison.instance();
+                }
+                return delegate;
+                ]]>
+            </GetBody>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.liaison</PACKAGE>
+        <PATH>liaison</PATH>
+        
+        <NAME>ConcurrentNotificationLiaison</NAME>
+        <EXTENDS>NotificationLiaisonProxy</EXTENDS>
+        
+        <HELP>This liaison proxies to a delegate implementation asynchronously using multiple threads.</HELP>
+        
+        <PROPERTY>
+            <NAME>pool</NAME>
+            <WIDTH>NotificationThreadPool.POOLNAME_WIDTH</WIDTH>
+            <web-control>new NotificationThreadPoolKeyWebControl()</web-control>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

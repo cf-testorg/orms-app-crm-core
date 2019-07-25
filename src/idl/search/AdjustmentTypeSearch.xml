@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+   <ENTITY generate-table-webcontrol="false">
+      <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+      <NAME>AdjustmentTypeSearch</NAME>
+      <LABEL>Adjustment Type Search</LABEL>
+      <HELP>Search for a Adjustment Type Name</HELP>
+
+      <PROPERTY>
+         <NAME>name</NAME>
+         <LABEL>Name</LABEL>
+         <TYPE>String</TYPE>
+         <HELP>Adjustment Type Name</HELP>
+      </PROPERTY>
+   </ENTITY>
+</MODEL>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.home.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.elang.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.xenum.Enum</IMPORT>
+    <IMPORT>com.redknee.app.crm.extension.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.extension.creditcategory.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.filter.FinalExtensionPredicate</IMPORT>
+    <IMPORT>java.util.List</IMPORT> 
+    <IMPORT>java.util.ArrayList</IMPORT> 
+
+    <ENTITY abstract="true" generate-home="false">
+        <NAME>ExtensionHolder</NAME>
+        <LABEL/>
+        <PACKAGE>com.redknee.app.crm.extension</PACKAGE>
+        <HELP/>
+        
+        <IMPLEMENTS>java.lang.Comparable</IMPLEMENTS>
+        
+        <FromWebPreRowHead>
+            // Put the extension's parent bean in the context for fromWeb()
+            ExtensionSupportHelper.get(ctx).setParentBean(ctx, ((Context)ctx.get("..")).get(BEAN));
+        </FromWebPreRowHead>
+
+        <PROPERTY required="y">
+            <NAME>extension</NAME>
+            <LABEL/>
+            <TYPE type="entity">com.redknee.app.crm.extension.Extension</TYPE>
+            <web-control>new ExtensionViewCustomizationWebControl(
+                                new FilteredEntityWebControl(
+                                    RegisteredExtensionPredicate.instance(), 
+                                    com.redknee.app.crm.extension.Extension.class, false, 
+                                    new Not(new FinalExtensionPredicate())).setNumOfBlanks(2))</web-control> 
+            <WebPreRow>
+                // Put the extension's parent bean in the context for toWeb()
+                ExtensionSupportHelper.get(subCtx).setParentBean(subCtx, ctx.get(BEAN));
+            </WebPreRow>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false">
+        <NAME>ServiceExtensionHolder</NAME>
+        <LABEL/>
+        <PACKAGE>com.redknee.app.crm.extension.service</PACKAGE>
+        <PATH>service</PATH>
+        <EXTENDS>ExtensionHolder</EXTENDS>
+        <HELP/>
+        
+        <FromWebPreRowHead>
+            // Put the extension's parent bean in the context for fromWeb()
+            ExtensionSupportHelper.get(ctx).setParentBean(ctx, ((Context)ctx.get("..")).get(BEAN));
+        </FromWebPreRowHead>
+
+        <PROPERTY required="y">
+            <NAME>extension</NAME>
+            <LABEL/>
+            <TYPE type="entity">com.redknee.app.crm.extension.Extension</TYPE>
+            <web-control>new ExtensionViewCustomizationWebControl(
+                                new FilteredEntityWebControl(
+                                    RegisteredExtensionPredicate.instance(), 
+                                    com.redknee.app.crm.extension.service.ServiceExtension.class, false, 
+                                    false).setNumOfBlanks(2),
+                                /* Hidden Properties */
+                                ServiceExtensionXInfo.SERVICE_ID)</web-control> 
+            <WebPreRow>
+                // Put the extension's parent bean in the context for toWeb()
+                ExtensionSupportHelper.get(subCtx).setParentBean(subCtx, ctx.get(BEAN));
+            </WebPreRow>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY generate-home="false">
+        <NAME>AuxiliaryServiceExtensionHolder</NAME>
+        <LABEL/>
+        <PACKAGE>com.redknee.app.crm.extension.auxiliaryservice</PACKAGE>
+        <PATH>auxiliaryservice</PATH>
+        <EXTENDS>ExtensionHolder</EXTENDS>
+        <HELP/>
+        
+        <FromWebPreRowHead>
+            // Put the extension's parent bean in the context for fromWeb()
+            ExtensionSupportHelper.get(ctx).setParentBean(ctx, ((Context)ctx.get("..")).get(BEAN));
+        </FromWebPreRowHead>
+
+        <PROPERTY required="y">
+            <NAME>extension</NAME>
+            <LABEL/>
+            <TYPE type="entity">com.redknee.app.crm.extension.Extension</TYPE>
+            <web-control>new ExtensionViewCustomizationWebControl(
+                                new FilteredEntityWebControl(
+                                    RegisteredExtensionPredicate.instance(), 
+                                    com.redknee.app.crm.extension.auxiliaryservice.AuxiliaryServiceExtension.class, false, 
+                                    false).setNumOfBlanks(2),
+                                /* Hidden Properties */
+                                AuxiliaryServiceExtensionXInfo.AUXILIARY_SERVICE_ID)</web-control> 
+            <WebPreRow>
+                // Put the extension's parent bean in the context for toWeb()
+                ExtensionSupportHelper.get(subCtx).setParentBean(subCtx, ctx.get(BEAN));
+            </WebPreRow>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY generate-home="false">
+        <NAME>CreditCategoryExtensionHolder</NAME>
+        <LABEL/>
+        <PACKAGE>com.redknee.app.crm.extension.creditcategory</PACKAGE>
+        <PATH>creditcategory</PATH>
+        <EXTENDS>ExtensionHolder</EXTENDS>
+        <HELP/>        
+        <FromWebPreRowHead>
+            // Put the extension's parent bean in the context for fromWeb()
+            ExtensionSupportHelper.get(ctx).setParentBean(ctx, ((Context)ctx.get("..")).get(BEAN));
+        </FromWebPreRowHead>
+
+        <PROPERTY required="y">
+            <NAME>extension</NAME>
+            <LABEL/>
+            <TYPE type="entity">com.redknee.app.crm.extension.Extension</TYPE>
+            <web-control>new ExtensionViewCustomizationWebControl(
+                                new FilteredEntityWebControl(
+                                    RegisteredExtensionPredicate.instance(), 
+                                    com.redknee.app.crm.extension.creditcategory.CreditCategoryExtension.class, false, 
+                                    new Not(new FinalExtensionPredicate())).setNumOfBlanks(2),
+                                /* Hidden Properties */
+                                CreditCategoryExtensionXInfo.CREDIT_CATEGORY)</web-control> 
+            <WebPreRow>
+
+                // Put the extension's parent bean in the context for toWeb()
+                ExtensionSupportHelper.get(subCtx).setParentBean(subCtx, ctx.get(BEAN));
+            </WebPreRow>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>

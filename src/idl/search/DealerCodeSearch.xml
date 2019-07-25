@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+	<ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>DealerCodeSearch</NAME>
+
+        <PROPERTY>
+            <NAME>code</NAME>
+            <LABEL>Dealer Code</LABEL>
+	    <HELP><![CDATA[
+		    <p>Unique code representing the dealer.</p>
+		    <p>Cannot be empty.  Not editable after creation.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider ID</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+	    <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+	    <HELP><![CDATA[
+		    <p>Service provider that the dealer belongs to.</p>
+		    <p>Use the drop-down list to select the appropriate choice.  The list contains providers from the
+			    <b>Service Providers</b> page.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY required="y">
+            <NAME>desc</NAME>
+            <LABEL>Description</LABEL>
+	    <HELP><![CDATA[
+		    <p>Description of the dealer.</p>
+		    <p>Maximum 64 characters.</p>
+		    <p>Cannot be empty.</p>
+		    ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>
+

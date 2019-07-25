@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <NAME>CallTypeSearch</NAME>
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+
+        <PROPERTY>
+            <NAME>id</NAME>
+            <LABEL>Call Type ID</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+	    <HELP><![CDATA[
+		    <p>ID for this call type.  Together with the <b>SPID</b>, it forms a unique identifier for the call type.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>SPID</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+	    <HELP><![CDATA[
+		    <p>ID of the service provider this call type applies to.  Together with the <b>Call Type ID</b>, 
+			    it forms a unique identifier for the call type.</p>
+		    <p>Must be the ID of a valid provider from the <b>Service Providers</b> page.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>invoiceDesc</NAME>
+            <LABEL>Invoice Description</LABEL>
+	    <HELP><![CDATA[
+		    <p>Description of the call type that appears on the invoice.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>glCode</NAME>
+            <LABEL>GL Code</LABEL>
+	    <HELP><![CDATA[
+		    <p>General ledger code (billing classification) associated with the call type.</p>
+		    ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>
+

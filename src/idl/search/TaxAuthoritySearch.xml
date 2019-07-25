@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+   <ENTITY generate-table-webcontrol="false">
+      <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+      <NAME>TaxAuthoritySearch</NAME>
+      <LABEL>Tax Authority Search</LABEL>
+      <HELP>Search for a Tax Authority </HELP>
+
+      <PROPERTY>
+         <WebPreRow>startColumns(out);</WebPreRow>
+         <NAME>taxId</NAME>
+         <LABEL>Tax Identifier</LABEL>
+         <TYPE>int</TYPE>
+         <DEFAULT>-1</DEFAULT>
+         <web-control>new OptionalLongWebControl(-1)</web-control>
+         <HELP>Tax Authority Identifier</HELP>
+      </PROPERTY>
+
+	<PROPERTY>
+	         <WebPreRow>nextColumn(out);</WebPreRow>
+		<NAME>spid</NAME>
+		<LABEL>Service Provider</LABEL>
+		<TYPE>int</TYPE>
+        <DEFAULT>-1</DEFAULT>
+        <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+        <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+        <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+		<HELP>The service provider.</HELP>
+	</PROPERTY>
+
+      <PROPERTY>
+         <WebPreRow>nextColumn(out);</WebPreRow>
+         <NAME>name</NAME>
+         <LABEL>Name</LABEL>
+         <HELP>Tax Authority Name</HELP>
+         <WebPostRow>endColumns(out);</WebPostRow>
+      </PROPERTY>
+   </ENTITY>
+</MODEL>

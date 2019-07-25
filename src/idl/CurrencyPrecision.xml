@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+
+    <ENTITY abstract="true" generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+        <NAME>CurrencyPrecision</NAME>
+
+        <IMPORT>com.redknee.framework.core.web.XCurrencyWebControl</IMPORT>
+        <IMPORT>com.redknee.framework.core.locale.Currency</IMPORT>
+
+        <IMPORT>com.redknee.util.snippet.webcontrol.CustomPrecisionCurrencyWebControl</IMPORT>
+
+        <IMPORT>com.redknee.app.crm.web.control.PreviewLongWebControl</IMPORT>
+
+        <LABEL>Currency Precision Configuration</LABEL>
+        <HELP></HELP>
+
+        <IMPLEMENTS>com.redknee.framework.xhome.context.ContextAware</IMPLEMENTS>
+
+        <CODE template="WebRow">startColumns(out);</CODE>
+
+        <PROPERTY>
+            <NAME>storagePrecision</NAME>
+            <TYPE>int</TYPE>
+            <LABEL>Storage Precision</LABEL>
+            <MIN>0</MIN>
+            <MAX>7</MAX>
+            <DEFAULT>2</DEFAULT>
+            <web-control>new PreviewLongWebControl(8)</web-control>
+            <HELP><![CDATA[
+                <p>How many positions are on the right of the decimal point in storage. [0..7]</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY mode="read-only">
+            <NAME>storagePrecisionDisplay</NAME>
+            <TYPE>long</TYPE>
+            <LABEL>Example:</LABEL>
+            <DEFAULT>987654321L</DEFAULT>
+            <web-control>new CustomPrecisionCurrencyWebControl(XCurrencyWebControl.instance(), CurrencyPrecisionXInfo.STORAGE_PRECISION, CurrencyPrecisionXInfo.STORAGE_PRECISION)</web-control>
+            <HELP><![CDATA[
+                <p>Value presentation example in storage precision.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">nextColumn(out);</CODE>
+
+        <PROPERTY>
+            <NAME>displayPrecision</NAME>
+            <TYPE>int</TYPE>
+            <LABEL>Display Precision</LABEL>
+            <MIN>0</MIN>
+            <MAX>7</MAX>
+            <DEFAULT>2</DEFAULT>
+            <Assert>if (getStoragePrecision() &lt; displayPrecision) { throw new GreaterThanMaxException(CurrencyPrecisionXInfo.DISPLAY_PRECISION, "Display Precision cannot be grater then Storage Precision.", getStoragePrecision()); }
+            </Assert>
+            <web-control>new PreviewLongWebControl(8)</web-control>
+            <HELP><![CDATA[
+                <p>How many positions to the right of the decimal point will be displayed. [0..7] should be less or equal to storage precision.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY mode="read-only">
+            <NAME>displayPrecisionDisplay</NAME>
+            <TYPE>long</TYPE>
+            <LABEL>Example:</LABEL>
+            <DEFAULT>987654321L</DEFAULT>
+            <web-control>new CustomPrecisionCurrencyWebControl(XCurrencyWebControl.instance(), CurrencyPrecisionXInfo.STORAGE_PRECISION, CurrencyPrecisionXInfo.DISPLAY_PRECISION)</web-control>
+            <HELP><![CDATA[
+                <p>Value presentation example in display precision.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">endColumns(out);</CODE>
+    </ENTITY>
+</MODEL>

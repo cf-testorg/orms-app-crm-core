@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>DiscountClassSearch</NAME>
+        <HELP>DiscountClass search bean.</HELP>
+
+        <PROPERTY>
+            <NAME>id</NAME>
+            <LABEL>Discount Class Id</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+	    <HELP><![CDATA[
+		    <p>Unique ID representing the discount class.</p>
+		    <p>Must be an integer.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Discount Class Name</LABEL>
+	    <HELP><![CDATA[
+		    <p>Name of the discount class.</p>
+		    ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>
+

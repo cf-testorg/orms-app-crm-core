@@ -1,0 +1,2 @@
+;; System Status Dashboard
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.bean.DashboardItemHome.class) (let ((b (com.redknee.framework.core.bean.DashboardItem.))) (setBeanProperty b "Name" "SystemStatusDashboardAgent")(setBeanProperty b "Panel" (com.redknee.framework.core.bean.PanelEnum.get 1s))(setBeanProperty b "Agent" (let ((b (com.redknee.app.crm.web.agent.SystemStatusDashboardAgent.)))  b)) b)))

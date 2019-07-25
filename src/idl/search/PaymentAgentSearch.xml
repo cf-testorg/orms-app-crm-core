@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+       <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+       <NAME>PaymentAgentSearch</NAME>
+       <LABEL>Payment Agent Search</LABEL>
+
+       <PROPERTY>
+          <WebPreRow>startColumns(out);</WebPreRow>
+          <NAME>name</NAME>
+          <LABEL>Name</LABEL>
+          <WIDTH>28</WIDTH>
+          <HELP>Name of the Payment Agent to search for.</HELP>
+       </PROPERTY>
+
+       <PROPERTY>
+          <WebPreRow>nextColumn(out);</WebPreRow>
+          <NAME>spid</NAME>
+          <LABEL>Service Provider ID</LABEL>
+          <TYPE>int</TYPE>
+          <DEFAULT>-1</DEFAULT>
+          <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+          <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+          <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+          <HELP><![CDATA[
+              <p>Service provider that the payment agent belongs to.</p>
+              <p>Use The drop-down list to select the appropriate choice.  The list contains providers from the 
+                  <b>Service Providers</b> page.</p>
+              ]]></HELP>
+          <WebPostRow>endColumns(out);</WebPostRow>
+       </PROPERTY>
+
+    </ENTITY>   
+</MODEL>

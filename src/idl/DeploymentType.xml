@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MODEL>
+    <enum package="com.redknee.app.crm.bean" name="DeploymentType">
+        <choice name="STANDALONE" label="Stand-alone" index="1"/>
+        <choice name="BAS" label="BAS" index="2"/>
+        <choice name="ECARE" label="E-Care" index="3"/>
+    </enum>
+</MODEL>

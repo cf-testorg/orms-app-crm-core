@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.notification.template.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification</PACKAGE>
+        
+        <NAME>NotificationResultCallbackProxy</NAME>
+        
+        <IMPLEMENTS>NotificationResultCallback</IMPLEMENTS>
+    
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">NotificationResultCallback</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(NotificationResultCallback.class).setOptional(true)</web-control>
+            <GetBody>
+                <![CDATA[
+                NotificationResultCallback delegate = delegate_;
+                if (delegate == null)
+                {
+                    delegate = NullNotificationResultCallback.instance();
+                }
+                return delegate;
+                ]]>
+            </GetBody>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

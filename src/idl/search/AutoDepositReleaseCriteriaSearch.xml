@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>AutoDepositReleaseCriteriaSearch</NAME>
+
+        <PROPERTY>
+            <NAME>identifier</NAME>
+            <TYPE>long</TYPE>
+            <HELP>
+                <![CDATA[
+                <p>The unique identifier of the automatic deposit release criteria to search for.</p>
+                ]]>
+            </HELP>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <WIDTH>10</WIDTH>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>description</NAME>
+            <WIDTH>40</WIDTH>
+            <HELP>
+                <![CDATA[
+                <p>The description of the automatic deposit release criteria to search for.</p>
+                ]]>
+            </HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This code is a protected work and subject to domestic and international    -->
+<!-- copyright law(s).  A complete listing of authors of this work is readily   -->
+<!-- available.  Additionally, source code is, by its very nature, confidential -->
+<!-- information and inextricably contains trade secrets and other information  -->
+<!-- proprietary, valuable and sensitive to Redknee.  No unauthorized use,      -->
+<!-- disclosure, manipulation or otherwise is permitted, and may only be used   -->
+<!-- in accordance with the terms of the license agreement entered into with    -->
+<!-- Redknee Inc. and/or its subsidiaries.                                      -->
+<!--                                                                            -->
+<!-- Copyright (c) Redknee Inc. and its subsidiaries. All Rights Reserved.      -->
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>BillingOptionMappingSearch</NAME>
+        <LABEL>Call Categorization Search</LABEL>
+        <HELP>The form for searching Call Categorization Items.</HELP>
+
+        <PROPERTY>
+            <NAME>ruleId</NAME>
+            <LABEL>Rule ID</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+	    <HELP><![CDATA[
+		    <p>Unique ID of the billing option mapping.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+	    <HELP><![CDATA[
+		    <p>Service provider that this billing option mapping applies to.</p>
+		    <p>Use the drop-down list to select the appropriate choice.  The list contains providers from the
+			    <b>Service Providers</b> page.</p>
+		    ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>zoneIdentifier</NAME>
+            <LABEL>Destination Zone ID</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+	    <HELP><![CDATA[
+		    <p>Set of mobile number (MSISDN or MDN) prefixes used to match calls to this rule.</p>
+		    <p>The prefix of the destination number must match one in this set.</p>
+		    <p>Use the drop-down list to select the appropriate choice.  The list contains prefix sets
+			    (destination zones) from the <b>Destination Zones</b> page.</p>
+		    ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>
+

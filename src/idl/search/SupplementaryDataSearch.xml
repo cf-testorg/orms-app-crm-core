@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Set</IMPORT>
+    <IMPORT>java.util.HashSet</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.KeyValueFeatureEnum</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>SupplementaryDataSearch</NAME>
+        
+        <PROPERTY mode="hidden" required="y">
+            <NAME>entity</NAME>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <HELP><![CDATA[
+                <p>Entity to which this supplementary data object is related to.</p>
+                <p>This is a Read-only field.</p>
+            ]]></HELP>
+            <HIDDEN />
+        </PROPERTY>
+
+        <PROPERTY mode="hidden" required="y">
+            <NAME>identifier</NAME>
+            <WIDTH>512</WIDTH>
+            <HELP><![CDATA[
+                <p>Identifier of the object to which this supplementary data object is related to.</p>
+                <p>This is a Read-only field.</p>
+            ]]></HELP>
+            <HIDDEN />
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>key</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>256</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <postLabel>(?*)</postLabel>
+            <HIDDEN />
+            <HELP></HELP>
+        </PROPERTY>
+    </ENTITY> 
+</MODEL>

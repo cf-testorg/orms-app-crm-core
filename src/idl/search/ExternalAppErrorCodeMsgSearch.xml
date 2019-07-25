@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Set</IMPORT>
+    <IMPORT>java.util.HashSet</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.externalapp.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <IMPORT>com.redknee.framework.xhome.webcontrol.EnumIndexWebControl</IMPORT>
+        <IMPORT>com.redknee.framework.license.LicenseMgr</IMPORT>
+        <IMPORT>com.redknee.app.crm.ModelCrmLicenseConstants</IMPORT>
+        <NAME>ExternalAppErrorCodeMsgSearch</NAME>
+        
+        <PROPERTY required="y">
+            <NAME>externalApp</NAME>
+            <LABEL>External Application</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>ExternalAppEnum.VOICE_INDEX</DEFAULT>
+            <web-control>new EnumIndexWebControl(ExternalAppEnum.COLLECTION)</web-control>
+            <HELP><![CDATA[
+            <p>External application.</p>
+            ]]></HELP>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>errorCode</NAME>
+            <HELP>Error Code</HELP>
+            <TYPE>int</TYPE>
+            <DEFAULT>-9999</DEFAULT>
+            <web-control>new com.redknee.framework.xhome.webcontrol.OptionalLongWebControl(ExternalAppErrorCodeMsgSearch.DEFAULT_ERRORCODE)</web-control>
+            <TABLE-ORDER>B</TABLE-ORDER>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>language</NAME>
+            <LABEL>Language</LABEL>
+            <DEFAULT>"DEFAULT_LANGUAGE"</DEFAULT>
+            <web-control>new com.redknee.app.crm.web.control.SpidAwareLangKeyWebControl(1, false, new KeyWebControlOptionalValue("-default-", ExternalAppErrorCodeMsgSearch.DEFAULT_LANGUAGE), false)</web-control>
+            <TABLE-ORDER>C</TABLE-ORDER>
+            <WebPreRow><![CDATA[
+              final LicenseMgr manager = (LicenseMgr) ctx.get(LicenseMgr.class);
+              if (manager != null && manager.isLicensed(ctx, ModelCrmLicenseConstants.MULTI_LANGUAGE))
+              {
+            ]]></WebPreRow>
+            <WebPostRow>}</WebPostRow>
+            <HELP>The language selection.</HELP>
+            <PERMISSION read = "spid.multi" write = "spid.multi"/>
+        </PROPERTY>
+    </ENTITY> 
+</MODEL>

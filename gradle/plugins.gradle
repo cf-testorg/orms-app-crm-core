@@ -1,0 +1,19 @@
+project.buildscript {
+    ext {
+        gradleDir = "$rootDir/gradle"
+    }
+    dependencies {
+        classpath "com.optiva.orms:orms-build-plugin:$buildPluginVersion"
+    }
+    repositories {
+        if (!System.getenv('BUILD_ID')) {
+            mavenLocal()
+        }
+        mavenResolveRepos.tokenize(',').every { repo ->
+            repositories.maven {
+                name = repo
+                url = uri("${findProperty('nexusUrl') ?: artifactoryUrl}/$repo")
+            }
+        }
+    }
+}

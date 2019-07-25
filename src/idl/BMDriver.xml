@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+	<IMPORT>java.util.List</IMPORT>
+	<IMPORT>java.util.ArrayList</IMPORT>
+	<IMPORT>java.util.Date</IMPORT>
+	<IMPORT>java.util.Set</IMPORT>
+	<IMPORT>java.util.HashSet</IMPORT>
+	<IMPORT>java.util.Map</IMPORT>
+	<IMPORT>java.util.HashMap</IMPORT>
+	<IMPORT>java.util.Collections</IMPORT>
+	
+   <ENTITY generate-home="false" generate-table-webcontrol="false" abstract="true">
+      <PACKAGE>com.redknee.app.crm.bundle.driver</PACKAGE>
+      
+      <NAME>BMDriverProxy</NAME>
+      <LABEL>Bundle Manager Driver</LABEL>
+      <HELP>Configure Bundle Manager interface.</HELP>
+      <IMPLEMENTS>BMDriver</IMPLEMENTS>
+      
+      
+      <PROPERTY>
+         <NAME>delegate</NAME>
+         <LABEL></LABEL>
+	 <HELP></HELP>
+	 <TYPE type="entity">BMDriver</TYPE>
+         <HELP>Bundle Manager Driver.</HELP>
+      </PROPERTY>
+      
+   </ENTITY>
+
+   <ENTITY generate-home="false" generate-table-webcontrol="false" abstract="true">
+      <PACKAGE>com.redknee.app.crm.bundle.driver</PACKAGE>
+      
+      <NAME>PMBMDriver</NAME>
+      <LABEL>Bundle Manager Performance Measure Driver</LABEL>
+      <HELP>Configure Bundle Manager interface with Performance Measures.</HELP>
+      <EXTENDS>BMDriverProxy</EXTENDS>
+   </ENTITY>
+   
+   <ENTITY generate-home="false" generate-table-webcontrol="false" abstract="true">
+      <PACKAGE>com.redknee.app.crm.bundle.driver</PACKAGE>
+      
+      <NAME>LoggingBMDriver</NAME>
+      <LABEL>Bundle Manager Logging Driver</LABEL>
+      <HELP>Configure Bundle Manager interface with Logging.</HELP>
+      <EXTENDS>BMDriverProxy</EXTENDS>
+   </ENTITY>
+   
+   <ENTITY generate-home="false" generate-table-webcontrol="false" abstract="true">
+      <PACKAGE>com.redknee.app.crm.bundle.driver</PACKAGE>
+      <IMPLEMENTS>BMDriver</IMPLEMENTS>
+      
+      <NAME>CORBABMDriver</NAME>
+      <LABEL></LABEL>
+      <HELP>It represents the Corba Bundle Manager Driver.</HELP>
+
+   </ENTITY>
+</MODEL>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY
+        generate-home="false"
+        generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>AuxiliaryServiceSearch</NAME>
+        <LABEL>Auxiliary Service Search</LABEL>
+        <HELP>Search Auxiliary Services by ID, Type and SPID. Exact matches are displayed. Enter multiple search criteria to narrow search results.</HELP>
+
+        <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+        <IMPORT>com.redknee.framework.xhome.webcontrol.KeyWebControlOptionalValue</IMPORT>
+
+        <PROPERTY>
+            <NAME>identifier</NAME>
+            <LABEL>Aux. Service ID</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <HELP><![CDATA[
+                <p>Unique ID representing the auxiliary service. Exact matches are displayed.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>type</NAME>
+            <LABEL>Aux. Service Type</LABEL>
+            <TYPE>AuxiliaryServiceTypeEnum</TYPE>
+            <!--DEFAULT>-1</DEFAULT-->
+            <PERMISSION root="app.crm.auxservice.multitype"/>
+            <web-control>new EnumOptionalWebControl(AuxiliaryServiceTypeEnum.COLLECTION, "--Select All--")</web-control>
+            <HELP><![CDATA[
+                <p>Type of auxiliary service.  Value is one of:</p>
+                <ul>
+                    <li>PLP/CUG = Auxiliary services for PLPs/CUGs (Friends and Family rating).</li>
+                    <li>Basic = Basic auxiliary services with no additional parameters (optional - available if
+                        supported).</li>
+                    <li>Provisionable = Auxiliary services which provide support for HLR provisioning commands (optional -
+                        available if supported).</li>
+                    <li>Home Zone = Auxiliary services used for home zone rating (optional).</li>
+                    <li>VPN = Auxiliary services used for discounts on VPN calls.</li>
+                    <li>Voicemail = Auxiliary services used to provide voice mail features.</li>
+                    <li>Additional Mobile Number = Auxiliary services used to provide additional mobile number features.</li>
+                </ul>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>SPID</LABEL>
+            <TYPE>int</TYPE>
+            <!-- [Victor]: We need an optional value here.. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new SpidKeyWebControl(1, false, new KeyWebControlOptionalValue("--Select All--", Integer.valueOf(-1)))</web-control>
+            <PERMISSION
+                read="spid.multi"
+                write="spid.multi" />
+            <HELP><![CDATA[
+                <p>Service provider that the auxiliary service belongs to.</p>
+                <p>Use the drop-down list to select the appropriate choice.  The list contains providers from the <b>Service
+                    Providers</b> page.</p>
+            ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

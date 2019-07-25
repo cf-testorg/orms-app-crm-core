@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+        
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>CreditCategorySearch</NAME>
+        <!--LABEL><CreditCategorySearch></LABEL-->
+        <HELP>Search for credit category.</HELP>
+        
+        <PROPERTY>
+            <NAME>code</NAME>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <WIDTH>10</WIDTH>
+            <HELP>Code of the Credit Category to search for.</HELP>
+        </PROPERTY>
+    
+        <PROPERTY>
+            <NAME>desc</NAME>
+            <LABEL>Description</LABEL>
+            <TYPE>String</TYPE>
+            <WIDTH>30</WIDTH>
+            <HELP>Description of the Credit Category to search for.</HELP>
+        </PROPERTY>
+            
+    </ENTITY>
+
+</MODEL>
+

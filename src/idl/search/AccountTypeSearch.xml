@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>AccountTypeSearch</NAME>
+        <LABEL>Account Type Search</LABEL>
+        <HELP>Searches for account type based on the provided criteria.</HELP>
+
+        <PROPERTY>
+            <WebPreRow>startColumns(out);</WebPreRow>
+            <NAME>identifier</NAME>
+            <LABEL>Account Type Identifier</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl()</web-control>
+            <HELP>Search by Account Type Identifier.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>name</NAME>
+            <LABEL>Name</LABEL>
+            <WebPostRow>endColumns(out);</WebPostRow>
+            <HELP>Search by Account Type Name.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

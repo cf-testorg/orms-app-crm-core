@@ -1,0 +1,21 @@
+dependencyManagement {
+    dependencies {
+        dependency 'jasperreports:jasperreports:3.0.0'
+    }
+}
+
+dependencies {
+    compileOnly 'redknee:framework'
+    testCompile 'redknee:framework'
+    testCompile 'redknee:test-support'
+
+    compile 'redknee:model-app-crm'
+    compile 'redknee:service-blackberry'
+    compile 'redknee:app-urcs-client'
+    compile 'redknee:interface-product-bundle-manager'
+    compile 'redknee:model-product-bundle-manager'
+
+    compile 'jasperreports:jasperreports'
+    compile 'redknee:service-smsc-client'
+    compile 'redknee:protocol-smpp-common'
+}

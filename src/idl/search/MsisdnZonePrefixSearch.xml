@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This code is a protected work and subject to domestic and international    -->
+<!-- copyright law(s).  A complete listing of authors of this work is readily   -->
+<!-- available.  Additionally, source code is, by its very nature, confidential -->
+<!-- information and inextricably contains trade secrets and other information  -->
+<!-- proprietary, valuable and sensitive to Redknee.  No unauthorized use,      -->
+<!-- disclosure, manipulation or otherwise is permitted, and may only be used   -->
+<!-- in accordance with the terms of the license agreement entered into with    -->
+<!-- Redknee Inc. and/or its subsidiaries.                                      -->
+<!--                                                                            -->
+<!-- Copyright (c) Redknee Inc. and its subsidiaries. All Rights Reserved.      -->
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>MsisdnZonePrefixSearch</NAME>
+        <LABEL>Destination Zone Search</LABEL>
+        <HELP>A search bean for MsisdnZonePrefix classes.</HELP>
+
+        <PROPERTY>
+            <NAME>identifier</NAME>
+            <LABEL>ID</LABEL>
+            <WIDTH>10</WIDTH>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <HELP>The unique identifier of this set of mobile number prefixes.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>description</NAME>
+            <LABEL>Description</LABEL>
+            <HELP>A description of the set of mobile number prefixes.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>
+

@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+
+<MODEL>
+
+	<ENTITY generate-home="false" >
+		<PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+    	<NAME>SmppConfig</NAME>
+    	<HELP>SMPP Configuration.</HELP>
+
+		<PROPERTY>
+			<NAME>SourceAddr</NAME>
+			<TYPE>String</TYPE>
+			<LABEL>Address of message originator</LABEL>
+			<HELP><![CDATA[
+				<p>Pre-configured address of the message originator.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>DataCoding</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Data Coding Scheme</LABEL>
+			<HELP><![CDATA[
+				<p>Data coding scheme of the message.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>ServiceType</NAME>
+			<TYPE>String</TYPE>
+			<LABEL>Service Type</LABEL>
+			<DEFAULT>null</DEFAULT>
+			<HELP><![CDATA[
+				<p>Service type used.  Freely configurable.  Default is NULL.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>SourceAddrTon</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Source Address TON</LABEL>
+			<HELP><![CDATA[
+				<p>TON of the message originator.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>SourceAddrNpi</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Source Address NPI</LABEL>
+			<HELP><![CDATA[
+				<p>NPI of the message originator.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+		
+		<PROPERTY>
+			<NAME>DestAddrTon</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Destination Address TON</LABEL>
+			<HELP><![CDATA[
+				<p>TON of the message recipient.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>DestAddrNpi</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Destination Address NPI</LABEL>
+			<HELP><![CDATA[
+				<p>NPI of the message recipient.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>EsmClass</NAME>
+			<TYPE>int</TYPE>
+			<HELP><![CDATA[
+				<p>ESM class of the message.  Default is 0x00.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>ProtocolId</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Protocol ID</LABEL>
+			<HELP><![CDATA[
+				<p>Protocol ID (PID) of the message.  Default is 0.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>priorityFlag</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Priority Flag</LABEL>
+			<HELP><![CDATA[
+				<p>Priority of the message.  Default is 0.</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+        <PROPERTY>
+            <NAME>smscScheduledDelivery</NAME>
+            <TYPE>boolean</TYPE>
+            <DEFAULT>false</DEFAULT>
+            <LABEL>Use SMSC Scheduled Delivery</LABEL>
+            <HELP><![CDATA[
+                <p>Defines whether to use SMSC scheduled delivery feature, or CRM queue.</p>
+                ]]></HELP>
+        </PROPERTY>
+
+		<PROPERTY>
+			<NAME>ValidityPeriod</NAME>
+			<TYPE>String</TYPE>
+			<LABEL>Message Validity Period</LABEL>
+			<DEFAULT>null</DEFAULT>
+			<HELP><![CDATA[
+				<p>Time when the message expires.  A blank entry means the message is valid for as long as the 
+					SMSC sets the messages validity.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY mode = "hidden">
+			<NAME>RegisteredDeliveryFlag</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Registered Delivery</LABEL>
+			<HELP>Indicator to signify if a delivery receipt or an SME acknowledgement is required</HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>ReplaceIfPresentFlag</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Replace Flag</LABEL>
+			<HELP><![CDATA[
+				<p>Indicates whether the submitted message replaces an existing message.</p>
+				<p>To replace the message, set to 1 (true).  Set to 0 otherwise (false).</p>
+				<p>Cannot be empty.</p>
+				]]></HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>MSISDNPrefix</NAME>
+			<TYPE>String</TYPE>
+			<LABEL>Mobile Number Prefix</LABEL>
+			<DEFAULT>null</DEFAULT>
+			<HELP><![CDATA[
+				<p>Additional international prefix of the MSISDN or MDN.</p>
+				]]></HELP>
+		</PROPERTY>
+		
+		<PROPERTY>
+			<NAME>MaxRetry</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Max number of Retries</LABEL>
+			<DEFAULT>0</DEFAULT>
+			<HELP>Max number of retries for SMS failure </HELP>
+		</PROPERTY>
+
+	</ENTITY>
+
+</MODEL>

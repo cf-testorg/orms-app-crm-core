@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+	<ENTITY generate-home="false" generate-table-webcontrol="false">
+        <NAME>PackageGroupSearch</NAME>
+        <LABEL>Package Group Search</LABEL>
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <HELP>Search bean for package groups</HELP>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>The service provider identifier.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Package Group Name</LABEL>
+            <TYPE>String</TYPE>
+            <WIDTH>20</WIDTH>
+            <HELP>Name of the package group.</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+</MODEL>
+

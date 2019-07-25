@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.numbermgn.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>NumberMgmtHistorySearch</NAME>
+        <HELP>Search SIM Package History by a number's Terminal ID and Event type. Exact matches are displayed.</HELP>
+
+        <PROPERTY>
+            <NAME>terminalId</NAME>
+            <LABEL>Terminal ID</LABEL>
+            <TYPE>String</TYPE>
+            <WIDTH>20</WIDTH>
+            <HELP>MSISDN or SIM Package ID</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>event</NAME>
+            <TYPE>long</TYPE>
+            <web-control>new HistoryEventKeyWebControl(1, false, new KeyWebControlOptionalValue("-- any events --", ""))</web-control>
+            <HELP>Event type - select from the drop-down list.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>
+

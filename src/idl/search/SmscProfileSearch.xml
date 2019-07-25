@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<MODEL>
+	<IMPORT>com.redknee.framework.xhome.webcontrol.LongWebControl</IMPORT>
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+  		    <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+ 		    <NAME>SmscTxConnectionConfigSearch</NAME>
+ 		    <LABEL>SMSC Tx Connection Manager Configuration Search</LABEL>
+ 		    <HELP>Search for SMSC Tx Connection Manager Configuration</HELP>
+
+     		<PROPERTY>
+    	 	    <WebPreRow>startColumns(out);</WebPreRow>
+				<NAME>ID</NAME>
+				<TYPE>long</TYPE>
+				<LABEL>SMSC ID</LABEL>
+				<DEFAULT>-1</DEFAULT>
+				<web-control>new OptionalLongWebControl(-1)</web-control>
+     		    <HELP>Type of identifcation</HELP>
+     		</PROPERTY>
+
+     		<PROPERTY>
+         		<WebPreRow>nextColumn(out);</WebPreRow>
+				<NAME>smscHost</NAME>
+				<LABEL>SMSC Host Address</LABEL>
+				<HELP>The IP address of the SMSC.</HELP>
+         		<WebPostRow>endColumns(out);</WebPostRow>
+      		</PROPERTY>
+    </ENTITY>
+</MODEL>    
+

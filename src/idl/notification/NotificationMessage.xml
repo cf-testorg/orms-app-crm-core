@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.core.bean.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.util.time.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.message</PACKAGE>
+        <PATH>message</PATH>
+        
+        <NAME>BasicSmsNotification</NAME>
+        <LABEL>SMS Message</LABEL>
+        
+        <IMPLEMENTS>SmsNotificationMessage</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>from</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>15</DISPLAYWIDTH>
+            <HELP>Message sender's' mobile number.  If empty, value from liaison will be used.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>message</NAME>
+            <WIDTH>30000</WIDTH>
+            <web-control>new TextAreaWebControl()</web-control>
+            <HELP>Message content.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>timeToSend</NAME>
+            <TYPE>Time</TYPE>
+            <DEFAULT>null</DEFAULT>
+            <string-to><![CDATA[(%1 != null ? String.valueOf(%1) : "")]]></string-to>
+            <string-from><![CDATA[((%1 != null && %1.trim().length() > 0) ? new com.redknee.framework.xhome.util.time.Time(%1) : null)]]></string-from>
+            <HELP>Time at which the SMSC should be instructed to actually send the message.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.message</PACKAGE>
+        <PATH>message</PATH>
+        
+        <NAME>BasicEmailNotification</NAME>
+        <LABEL>E-Mail Message</LABEL>
+        
+        <IMPLEMENTS>EmailNotificationMessage</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>fromAddress</NAME>
+            <WIDTH>com.redknee.framework.msg.MsgData.FROM_WIDTH</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Message sender's email address.  If empty, value from liaison will be used.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>replyToAddress</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Email address to which replies should be sent.  If empty, value from liaison will be used.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>subject</NAME>
+            <WIDTH>com.redknee.framework.msg.MsgData.SUBJECT_WIDTH</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Message subject.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>body</NAME>
+            <WIDTH>com.redknee.framework.msg.EmailTemplate.EMAIL_WIDTH</WIDTH>
+            <web-control>new TextAreaWebControl()</web-control>
+            <HELP>Message content.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>attachmentGenerators</NAME>
+            <TYPE of="Script">Map</TYPE>
+            <DEFAULT>new HashMap()</DEFAULT>
+            <HELP>The notification can optionally contain attachments in the form of a map from strings (attachment names) to Script instances (the script name must be the same as the attachment name).  The script must return an instance of DataSource, and this will most commonly be an instance of FileDataSource).</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>contentHandler</NAME>
+            <TYPE type="entity">MailContentHandler</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(MailContentHandler.class).setOptional(true)</web-control>
+            <HELP>Message content handler (i.e. HTML, plain-text, etc).</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.message</PACKAGE>
+        <PATH>message</PATH>
+        
+        <NAME>BasicBinaryNotification</NAME>
+        <LABEL>Binary Data Message</LABEL>
+        
+        <IMPLEMENTS>BinaryNotificationMessage</IMPLEMENTS>
+
+        <PROPERTY noClone="y">
+            <NAME>inputStreamGenerator</NAME>
+            <LABEL>Input Stream Generator</LABEL>
+            <TYPE type="entity">com.redknee.app.crm.io.InputStreamFactory</TYPE>
+            <HELP>A factory that returns an input stream that reads message content.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.message</PACKAGE>
+        <PATH>message</PATH>
+        
+        <NAME>BasicPostNotification</NAME>
+        <LABEL>Post Message</LABEL>
+        
+        <IMPLEMENTS>PostNotificationMessage</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>filename</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>The file which will be delivered for printing.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<MODEL>
+   <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+   <IMPORT>com.redknee.app.crm.bundle.*</IMPORT>
+   
+   <ENTITY generate-table-webcontrol="false" generate-home="false">
+      <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+      <NAME>BundleCategorySearch</NAME>
+      <LABEL>Bundle Category Search</LABEL>
+      <HELP>Search for a Bundle Category by its Category ID, Name of Category and SPID. Exact matches are displayed. Enter multiple criteria to narrow down search results.</HELP>
+
+      <CODE template="WebRow">startColumns(out);</CODE>
+
+      <PROPERTY>
+         <NAME>id</NAME>
+         <LABEL>Category ID</LABEL>
+         <TYPE>int</TYPE>
+         <DEFAULT>-1</DEFAULT>
+         <web-control>new OptionalLongWebControl()</web-control>
+         <HELP>Search by the category ID. Exact matches are displayed.</HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">nextColumn(out);</CODE>
+
+      <PROPERTY>
+         <NAME>name</NAME>
+         <HELP>Search by the name of the category. Supports wildcard search.</HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">nextColumn(out);</CODE>
+
+      <PROPERTY>
+         <NAME>spid</NAME>
+         <LABEL>Service Provider</LABEL>
+         <TYPE>int</TYPE>
+         <DEFAULT>9999</DEFAULT>
+         <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+         <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+         <web-control>new SpidKeyWebControl(1, false, new com.redknee.framework.xhome.webcontrol.KeyWebControlOptionalValue("--",new Integer(9999)))</web-control>
+         <HELP>Search by Service Provider. Exact matches are displayed.</HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">endColumns(out);</CODE>
+   </ENTITY>
+</MODEL>

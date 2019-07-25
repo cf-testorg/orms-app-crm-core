@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MODEL>
+    <ENTITY abstract="yes" generate-home="false">
+        <PACKAGE>com.redknee.app.crm.resource</PACKAGE>
+        <IMPORT>java.util.List</IMPORT>
+        <IMPORT>java.util.ArrayList</IMPORT>
+
+        <NAME>ResourceDeviceConfig</NAME>
+        <LABEL>Resource Device Mandatory Configuration</LABEL>
+        <HELP>Defines a list of subscription types for which the resource device s mandatory value.</HELP>
+
+        <PROPERTY>
+            <NAME>mandatoryForSubscriptionTypesList</NAME>
+            <LABEL/>
+            <TYPE of="ResourceDeviceConfigRow">List</TYPE>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.resource</PACKAGE>
+        <NAME>ResourceDeviceConfigRow</NAME>
+        <LABEL>Resource Device is Mandatory for these Subscriptions</LABEL>
+        <HELP>Defines a row for a list of subscription types for which the resource device s mandatory value.</HELP>
+
+        <IMPORT>com.redknee.app.crm.bean.account.SubscriptionTypeKeyWebControl</IMPORT>
+
+
+        <PROPERTY>
+            <NAME>subscriptionType</NAME>
+            <!--LABEL>Subscriprion</LABEL-->
+            <TYPE>long</TYPE>
+            <web-control>new SubscriptionTypeKeyWebControl()</web-control>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

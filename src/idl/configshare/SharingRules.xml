@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<MODEL>  
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.entity.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.filter.Predicate</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.Validator</IMPORT>
+    <IMPORT>com.redknee.util.partitioning.partition.rules.*</IMPORT>
+
+    <ENTITY generate-home="false" abstract="true" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.configshare</PACKAGE>
+        <IMPLEMENTS>Rule</IMPLEMENTS>
+        <IMPLEMENTS>com.redknee.framework.xhome.beans.Validatable</IMPLEMENTS>
+        <NAME>ConfigSharingRoutingRule</NAME>
+        <LABEL>Configuration Sharing Criteria</LABEL>
+        <HELP>This rule returns a configurable match strength if it matches one of the given beans.</HELP>
+        <CODE template="JavaBean">
+        <![CDATA[
+        public void validate(Context ctx) throws IllegalStateException
+        {
+            if ((getMatchStrength() < Rule.WORST_POSSIBLE_MATCH) ||
+            (getMatchStrength() > Rule.BEST_POSSIBLE_MATCH))
+            {
+                throw new IllegalStateException(" Strength needs to be below " + Rule.BEST_POSSIBLE_MATCH + " above " + Rule.WORST_POSSIBLE_MATCH);
+            }
+        }
+        ]]>
+        </CODE>
+
+
+        <PROPERTY>
+            <NAME>beanIdentifiers</NAME>
+            <LABEL />
+            <TYPE of="SharedBeanIdentifier">Map</TYPE>
+            <DEFAULT>new HashMap()</DEFAULT>
+            <HELP>List of information used to identify a shared configuration bean.</HELP>
+            <WebPreRow>subCtx.put(NUM_OF_BLANKS, 2);</WebPreRow>
+        </PROPERTY>
+        
+        <PROPERTY required="y">
+            <NAME>matchStrength</NAME>
+            <TYPE>int</TYPE>
+            <web-control>new com.redknee.framework.xhome.webcontrol.LongWebControl(11,null,Rule.WORST_POSSIBLE_MATCH,Rule.BEST_POSSIBLE_MATCH)</web-control>
+            <HELP>If the predicate passes, then this is the strength of the match that will be returned.</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.configshare</PACKAGE>
+        <NAME>SharedBeanIdentifier</NAME>
+        <LABEL></LABEL>
+        <PRIMARYKEY>beanClass</PRIMARYKEY>
+        
+        <PROPERTY mode="read-write" required="y">
+            <NAME>beanClass</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>4000</WIDTH>
+            <web-control>new TextAreaWebControl(60, 3)</web-control>
+            <HELP></HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>beanIdentifier</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>4000</WIDTH>
+            <web-control>new TextAreaWebControl(60, 3)</web-control>
+            <HELP></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false" abstract="true" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.configshare</PACKAGE>
+        <IMPLEMENTS>Rule</IMPLEMENTS>
+        <IMPLEMENTS>com.redknee.framework.xhome.beans.Validatable</IMPLEMENTS>
+        <NAME>ConfigChangeRequestRoutingRule</NAME>
+        <HELP>This rule returns a configurable match strength if it matches the given change request.</HELP>
+        <CODE template="JavaBean">
+        <![CDATA[
+        public void validate(Context ctx) throws IllegalStateException
+        {
+            if ((getMatchStrength() < Rule.WORST_POSSIBLE_MATCH) || (getMatchStrength() > Rule.BEST_POSSIBLE_MATCH))
+            {
+                throw new IllegalStateException(" Strength needs to be below " + Rule.BEST_POSSIBLE_MATCH + " above " + Rule.WORST_POSSIBLE_MATCH);
+            }
+        }
+        ]]>
+        </CODE>
+
+        <PROPERTY>
+            <NAME>filterBean</NAME>
+            <TYPE type="bean">ConfigChangeRequest</TYPE>
+            <HELP>Template bean that will be used to filter the given change requests.</HELP>
+            <WebPreRow><![CDATA[
+            // We do not support rules based on the following fields:
+            AbstractWebControl.setMode(subCtx, ConfigChangeRequestXInfo.TYPE_OF_UPDATE, ViewModeEnum.NONE);
+            AbstractWebControl.setMode(subCtx, ConfigChangeRequestXInfo.MODIFIED_BY, ViewModeEnum.NONE);
+            AbstractWebControl.setMode(subCtx, ConfigChangeRequestXInfo.TIMESTAMP, ViewModeEnum.NONE);
+            ]]></WebPreRow>
+        </PROPERTY>
+        
+        <PROPERTY required="y">
+            <NAME>matchStrength</NAME>
+            <TYPE>int</TYPE>
+            <web-control>new com.redknee.framework.xhome.webcontrol.LongWebControl(11,null,Rule.WORST_POSSIBLE_MATCH,Rule.BEST_POSSIBLE_MATCH)</web-control>
+            <HELP>If the predicate passes, then this is the strength of the match that will be returned.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>com.redknee.app.crm.move.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.move.request.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false">
+        <PACKAGE>com.redknee.app.crm.move.request</PACKAGE>
+        <NAME>CompoundMoveRequest</NAME>
+        <HELP></HELP>
+        <IMPLEMENTS>com.redknee.app.crm.move.MoveRequest</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>requests</NAME>
+            <TYPE of="MoveRequestHolder">List</TYPE>
+            <DEFAULT>new ArrayList()</DEFAULT>
+            <HELP>List of move requests.</HELP>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false">
+        <NAME>MoveRequestHolder</NAME>
+        <LABEL></LABEL>
+        <PACKAGE>com.redknee.app.crm.move.request</PACKAGE>
+        <HELP></HELP>
+
+        <PROPERTY required="y">
+            <NAME>request</NAME>
+            <LABEL></LABEL>
+            <TYPE type="entity">com.redknee.app.crm.move.MoveRequest</TYPE>
+            <HELP>This is an instance of a move request.</HELP>
+            <TABLE-ORDER>A</TABLE-ORDER>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

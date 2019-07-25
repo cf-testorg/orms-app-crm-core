@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false">
+        <PACKAGE>com.redknee.app.crm.delivery.email</PACKAGE>
+        <NAME>KeywordConfiguration</NAME>
+        <LABEL>Email Template's Keyword Configuration</LABEL>
+        <DESC>bean.getSubstitutionConfig()</DESC>
+
+        <PROPERTY>
+            <NAME>substitutionConfig</NAME>
+            <LABEL>Keyword Substitution Configuration</LABEL>
+            <TYPE of="EmailConstant">Map</TYPE>
+            <DEFAULT>new HashMap()</DEFAULT>
+            <HELP><![CDATA[
+                <p>The keyword substitution configuration which requires to specify the desired keyword and the source class name.</p>
+                <p>The property field is auto populated based on the bean's properties as supplied in class name.</p>
+                <p>A typical configuration would be keyword=$BAN$,classname=com.redknee.app.crm.bean.Account resulting in property=Account.BAN</p>
+            ]]>
+            </HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.delivery.email</PACKAGE>
+        <NAME>EmailConstant</NAME>
+        <LABEL>Email Constant Definition</LABEL>
+        <DESC>bean.getKeyword()</DESC>
+
+        <PRIMARYKEY>keyword</PRIMARYKEY>
+
+        <PROPERTY mode="read-write" required="y">
+            <NAME>keyword</NAME>
+            <LABEL>Keyword</LABEL>
+            <WIDTH>32</WIDTH>
+            <DISPLAYWIDTH>15</DISPLAYWIDTH>
+            <HELP>The keyword to be used in the Email templates. For example: $BAN$, $AMOUNT$ etc.</HELP>
+        </PROPERTY>
+
+        <PROPERTY required="y">
+            <NAME>valueCalculator</NAME>
+            <LABEL>Value Calculator</LABEL>
+            <TYPE type="entity">com.redknee.app.crm.calculator.ValueCalculator</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(com.redknee.app.crm.calculator.ValueCalculator.class)</web-control>
+            <HELP>The type of entity used to perform the constant's value calculation.</HELP>
+            <GetBody>return EmailKeywordConfigurationSupportHelper.get().getNonDeprecatedValueCalculator(valueCalculator_);</GetBody>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.pipe.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+        
+        <NAME>SimpleSmsGenerator</NAME>
+        <LABEL>SMS Message Generator</LABEL>
+        
+        <EXTENDS>AbstractMessageGenerator</EXTENDS>
+        
+        <HELP>This generator translates a simple notification template into a basic SMS notification.</HELP>
+
+        <PROPERTY>
+            <NAME>defaultFrom</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>15</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Message sender's' mobile number.  Only used if non-empty and if no suitable from address is provided by the message template.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+
+        <NAME>SimpleEmailGenerator</NAME>
+        <LABEL>E-Mail Message Generator</LABEL>
+        
+        <EXTENDS>AbstractMessageGenerator</EXTENDS>
+        
+        <HELP>This generator translates a simple notification template into a basic e-mail notification.</HELP>
+
+        <PROPERTY>
+            <NAME>defaultFrom</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Message sender's email address.  Only used if non-empty and if no suitable from address is provided by the message template.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>defaultReplyTo</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Email address to which replies should be sent.  Only used if non-empty and if no suitable reply-to address is provided by the message template.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>defaultContentHandler</NAME>
+            <TYPE type="entity">MailContentHandler</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(MailContentHandler.class).setOptional(true)</web-control>
+            <postLabel>(optional)</postLabel>
+            <HELP>Default message content handler (i.e. HTML, plain-text, etc).  Only used if non-empty and if no suitable handler is provided by the message template.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+        
+        <NAME>SimpleJasperMessageGenerator</NAME>
+        <LABEL>Jasper Message Generator</LABEL>
+        
+        <EXTENDS>AbstractBinaryMessageGenerator</EXTENDS>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+        
+        <NAME>SimpleUjacMessageGenerator</NAME>
+        <LABEL>UJAC Message Generator</LABEL>
+        
+        <EXTENDS>AbstractBinaryMessageGenerator</EXTENDS>
+        <IMPLEMENTS>MessageGenerator</IMPLEMENTS>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+        
+        <NAME>MessageGeneratorProxy</NAME>
+        <EXTENDS>AbstractMessageGenerator</EXTENDS>
+        
+        <HELP>This generator proxies to a delegate implementation.</HELP>
+        
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">MessageGenerator</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(MessageGenerator.class).setOptional(true)</web-control>
+            <GetBody>
+                <![CDATA[
+                MessageGenerator delegate = delegate_;
+                if (delegate == null)
+                {
+                    delegate = NullMessageGenerator.instance();
+                }
+                return delegate;
+                ]]>
+            </GetBody>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.generator</PACKAGE>
+        <PATH>generator</PATH>
+        
+        <NAME>ThrottledMessageGenerator</NAME>
+        <EXTENDS>MessageGeneratorProxy</EXTENDS>
+        
+        <HELP>This message generator proxies to a delegate implementation at a limited rate.</HELP>
+        
+        <PROPERTY>
+            <NAME>throttle</NAME>
+            <TYPE type="bean">ThrottleInfo</TYPE>
+            <DEFAULT>new ThrottleInfo()</DEFAULT>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

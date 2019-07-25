@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<MODEL>
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+
+        <NAME>SubscriberCycleBundleUsageSearch</NAME>
+        <LABEL>Usage Search</LABEL>
+
+        <HELP>This screen allows for subscriber voice usage to be searched by
+        subscriber identifier and account identifier.</HELP>
+
+        <PROPERTY>
+            <NAME>subscriberIdentifier</NAME>
+            <LABEL>Subscriber ID</LABEL>
+            <WIDTH>30</WIDTH>
+
+            <HELP>The identifier of the subcriber for which to show usage
+            information.</HELP>
+
+            <WebPreRow>startColumns(out);</WebPreRow>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>accountIdentifier</NAME>
+            <LABEL>Account ID</LABEL>
+            <WIDTH>21</WIDTH>
+
+            <HELP>The identifier of the account for which to show usage
+            information.</HELP>
+
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>

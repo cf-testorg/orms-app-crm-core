@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>PricePlanSearch</NAME>
+        <HELP>Defines a price plan search bean</HELP>
+
+        <PROPERTY>
+            <NAME>id</NAME>
+            <LABEL>Price Plan ID</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(PricePlanSearch.DEFAULT_ID)</web-control>
+            <HELP><![CDATA[
+                <p>Unique ID representing the price plan.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Price Plan Name</LABEL>
+            <WIDTH>40</WIDTH>
+            <HELP><![CDATA[
+                <p>Name of the price plan.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, new KeyWebControlOptionalValue("--",9999))</web-control>
+            <PERMISSION read="spid.multi" write="spid.multi"/>
+            <HELP><![CDATA[
+                <p>Service provider that the price plan belongs to.</p>
+                <p>Use the drop-down list to select the appropriate choice.  The list contains providers from the <b>Service Providers</b> page.</p>
+            ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>

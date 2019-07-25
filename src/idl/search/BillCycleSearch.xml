@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>BillCycleSearch</NAME>
+        <LABEL>Search</LABEL>
+
+        <PROPERTY>
+            <NAME>billCycleID</NAME>
+            <LABEL>Bill Cycle ID</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <WIDTH>10</WIDTH>
+        <HELP><![CDATA[
+<p>Unique ID for the bill cycle. It must be an integer.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+        <HELP><![CDATA[
+            <p>Service provider that the bill cycle belongs to.</p>
+<p>Select the appropriate Service Provider from the drop down list. The list contains providers from the 
+                <b>Service Providers</b> page.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>description</NAME>
+            <LABEL>Description</LABEL>
+            <WIDTH>60</WIDTH>
+        <HELP><![CDATA[
+            <p>Description of the bill cycle.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>dayOfMonth</NAME>
+            <LABEL>Day of Month</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+        <HELP><![CDATA[
+            <p>Day of the month that subscribers are billed and the billing cycle restarts.</p>
+            <p>Must be a positive integer in the range of 1 to 28.</p>
+            ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MODEL>
+
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+        <NAME>DefaultSubTypeMsisdnGroup</NAME>
+        <PRIMARYKEY>type</PRIMARYKEY>
+        
+        <PROPERTY mode="read-write">
+            <NAME>type</NAME>
+            <TYPE>long</TYPE>
+            <web-control>new com.redknee.app.crm.bean.account.SubscriptionTypeKeyWebControl()</web-control>
+            <TABLE-ORDER>A</TABLE-ORDER>
+            <HELP>Subscription Type Identifier</HELP>
+            <REFERENCE model="com.redknee.app.crm.bean.account.SubscriptionType" property="id"/>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>msisdnGroup</NAME>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <TABLE-ORDER>B</TABLE-ORDER>
+            <web-control>new MsisdnGroupKeyWebControl()</web-control>
+            <HELP>Mobile Number Group to use as the default when auto-selecting a MSISDN for a subscription.</HELP>
+            <REFERENCE model="com.redknee.app.crm.bean.MsisdnGroup" property="id"/>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

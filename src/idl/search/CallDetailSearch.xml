@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.CalendarSupportHelper</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.calldetail.SecondaryBalanceChargeTypeEnum</IMPORT>
+    <enum
+        package="com.redknee.app.crm.bean.search"
+        name="CallDetailSearchType">
+        <choice
+            name="TRANSACTION"
+            label="Transaction Date" />
+        <choice
+            name="POSTED"
+            label="PostedDate" />
+    </enum>
+    <ENTITY
+        generate-home="false"
+        generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>CallDetailSearch</NAME>
+        <LABEL>Call Details Search</LABEL>
+        <HELP>Searches for call details.</HELP>
+        <PROPERTY mode="hidden">
+            <NAME>chargedMSISDN</NAME>
+            <LABEL>Mobile Number</LABEL>
+            <WIDTH>20</WIDTH>
+            <HELP>The Mobile Number</HELP>
+        </PROPERTY>
+        <PROPERTY mode="hidden">
+            <NAME>subscriberID</NAME>
+            <LABEL>Subscriber ID</LABEL>
+            <WIDTH>15</WIDTH>
+            <HELP>The Subscriber ID</HELP>
+        </PROPERTY>
+        <PROPERTY>
+            <WebPreRow>startColumns(out);</WebPreRow>
+            <NAME>startDate</NAME>
+            <TYPE>Date</TYPE>
+            <DEFAULT>CalendarSupportHelper.get().getDaysBefore(new Date(),6)</DEFAULT>
+            <generate-default>no</generate-default>
+            <web-control>com.redknee.framework.xhome.webcontrol.DateTimeWebControl.instance()</web-control>
+            <HELP>The start date for Call Detail filtering.</HELP>
+        </PROPERTY>
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>endDate</NAME>
+            <TYPE>Date</TYPE>
+            <DEFAULT>new Date()</DEFAULT>
+            <generate-default>no</generate-default>
+            <web-control>com.redknee.framework.xhome.webcontrol.DateTimeWebControl.instance()</web-control>
+            <HELP>The end date for Call Detail filtering.</HELP>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+        <PROPERTY>
+            <WebPreRow>startColumns(out);</WebPreRow>
+            <NAME>searchBy</NAME>
+            <TYPE type="enum">CallDetailSearchTypeEnum</TYPE>
+            <DEFAULT>CallDetailSearchTypeEnum.POSTED</DEFAULT>
+            <HELP>Choose to search by transaction date or posted date.</HELP>
+        </PROPERTY>
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>limit</NAME>
+            <TYPE>int</TYPE>
+            <WIDTH>4</WIDTH>
+            <DEFAULT>100</DEFAULT>
+            <MIN>1</MIN>
+            <MAX>1000</MAX>
+            <HELP>Limit the number of rows returned.</HELP>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+         <PROPERTY>
+            <NAME>secondaryBalanceIndicator</NAME>
+            <TYPE>boolean</TYPE>
+            <DEFAULT>false</DEFAULT>
+            <HELP>Charging source</HELP>
+            <WebPreRow><![CDATA[
+             com.redknee.framework.license.LicenseMgr lmgr = (com.redknee.framework.license.LicenseMgr) ctx.get(com.redknee.framework.license.LicenseMgr.class);
+              if (lmgr.isLicensed(ctx,"Prepaid Airtime Secondary Balance") || lmgr.isLicensed(ctx,"Postpaid Airtime Secondary Balance")) {
+              startColumns(out);
+            ]]>
+            </WebPreRow>
+			 
+            <WebPostRow>}</WebPostRow>
+        </PROPERTY>
+        <PROPERTY>
+            <NAME>secondaryBalanceChargedAmount</NAME>
+            <TYPE>long</TYPE>
+            <DEFAULT>0</DEFAULT>
+            <HELP>Secondary balance atleast charged.</HELP>
+            <WebPreRow><![CDATA[
+             
+              if (lmgr.isLicensed(ctx,"Prepaid Airtime Secondary Balance") || lmgr.isLicensed(ctx,"Postpaid Airtime Secondary Balance")) {
+              nextColumn(out);
+            ]]>
+            </WebPreRow>
+			 
+            <WebPostRow>}</WebPostRow>
+            <web-control>com.redknee.framework.core.web.XCurrencyWebControl.instance()</web-control>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

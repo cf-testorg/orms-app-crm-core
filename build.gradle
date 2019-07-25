@@ -1,0 +1,16 @@
+buildscript {
+    apply from: "${rootDir}/gradle/plugins.gradle"
+}
+
+apply plugin: 'redknee.unified'
+apply from: "${rootDir}/gradle/dependencies.gradle"
+
+deployProcessResources.doFirst {
+    // etc
+    deployCopy['deploy/etc'] = new com.redknee.tool.installer.DeploymentTaskDef.Copy(
+            libTarget: 'deploy/current/etc',
+            deployTarget: "etc",
+            filter: true,
+            dos2unix: true
+    )
+}

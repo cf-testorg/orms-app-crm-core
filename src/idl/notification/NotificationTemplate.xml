@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>SimpleNotificationTemplate</NAME>
+        <LABEL>Basic Template</LABEL>
+        
+        <IMPLEMENTS>NotificationTemplate</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>message</NAME>
+            <WIDTH>30000</WIDTH>
+            <web-control>new TextAreaWebControl()</web-control>
+            <HELP>Message template</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>SmsNotificationTemplate</NAME>
+        <LABEL>SMS Template</LABEL>
+        
+        <EXTENDS>SimpleNotificationTemplate</EXTENDS>
+
+        <PROPERTY>
+            <NAME>from</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>15</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Message sender's' mobile number.  If empty, value from message generator or liaison will be used.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+
+        <NAME>EmailNotificationTemplate</NAME>
+        <LABEL>E-Mail Template</LABEL>
+        
+        <EXTENDS>SimpleNotificationTemplate</EXTENDS>
+
+        <PROPERTY>
+            <NAME>from</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Message sender's email address.  If empty, value from message generator or liaison will be used.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>replyTo</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <postLabel>(optional)</postLabel>
+            <HELP>Email address to which replies should be sent.  If empty, value from message generator or liaison will be used.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>subject</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Message subject.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>contentHandler</NAME>
+            <TYPE type="entity">MailContentHandler</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(MailContentHandler.class).setOptional(true)</web-control>
+            <postLabel>(optional)</postLabel>
+            <HELP>Message content handler (i.e. HTML, plain-text, etc).</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>StaticJasperNotificationTemplate</NAME>
+        <LABEL>Jasper Template</LABEL>
+        
+        <EXTENDS>SimpleNotificationTemplate</EXTENDS>
+        <IMPLEMENTS>BinaryNotificationTemplate</IMPLEMENTS>
+        
+        <HELP>This template contains a string representing a Jasper template.  It may contain strings that are intended for dynamic substitution, which would be processed by the message generator.</HELP>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>StaticUjacNotificationTemplate</NAME>
+        <LABEL>UJAC Template</LABEL>
+        
+        <EXTENDS>SimpleNotificationTemplate</EXTENDS>
+        <IMPLEMENTS>BinaryNotificationTemplate</IMPLEMENTS>
+        
+        <HELP>This template contains a string representing a UJAC template.  It may contain strings that are intended for dynamic substitution, which would be processed by the message generator.</HELP>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>FileBasedNotificationTemplate</NAME>
+        <LABEL>File-Based Template</LABEL>
+
+        <IMPLEMENTS>NotificationTemplate</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>templateFilenames</NAME>
+            <TYPE of="FilenameHolder">List</TYPE>
+            <DEFAULT>new ArrayList()</DEFAULT>
+            <HELP>Template file fully qualified names.  The first file in the list is assumed to be the primary template file and subsequent files are considered dependent files.</HELP>
+        </PROPERTY>
+        
+    </ENTITY>
+
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>FilenameHolder</NAME>
+        <LABEL></LABEL>
+        
+        <PRIMARYKEY>filename</PRIMARYKEY>
+        
+        <PROPERTY mode="read-write">
+            <NAME>filename</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Template file path &amp; filename.</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>JasperNotificationTemplate</NAME>
+        <LABEL>Jasper Template</LABEL>
+        
+        <EXTENDS>FileBasedNotificationTemplate</EXTENDS>
+        <IMPLEMENTS>BinaryNotificationTemplate</IMPLEMENTS>
+        
+        <HELP>This template contains a list of filenames containing Jasper template documents.  The first file in the list is assumed to be the primary template file and subsequent files are considered dependent files.</HELP>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.template</PACKAGE>
+        <PATH>template</PATH>
+        
+        <NAME>UjacNotificationTemplate</NAME>
+        <LABEL>UJAC Template</LABEL>
+        
+        <EXTENDS>FileBasedNotificationTemplate</EXTENDS>
+        <IMPLEMENTS>BinaryNotificationTemplate</IMPLEMENTS>
+        
+        <HELP>This template contains a list of filenames containing UJAC XSLT template documents.  The first file in the list is assumed to be the primary template file and subsequent files are considered dependent files.</HELP>
+    </ENTITY>
+</MODEL>

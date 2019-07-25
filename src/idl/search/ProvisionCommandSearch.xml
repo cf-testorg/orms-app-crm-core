@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>ProvisionCommandSearch</NAME>
+        <LABEL>Provision Command Search</LABEL>
+        <HELP>
+            Search for Provision Command by its name and SPID. Exact matches are displayed. Enter multiple criteria to
+            narrow down search results.
+        </HELP>
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider ID</LABEL>
+            <TYPE>int</TYPE>
+            <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+            <REFERENCE
+                model="com.redknee.app.crm.bean.CRMSpid"
+                property="id" />
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>The service provider identifier. Exact matches are displayed.</HELP>
+        </PROPERTY>
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Name</LABEL>
+            <HELP>The name for the provision command. Exact matches are displayed.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

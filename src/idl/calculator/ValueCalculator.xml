@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+	<IMPORT>java.util.HashMap</IMPORT>
+	<IMPORT>java.util.Map</IMPORT>
+	<IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+	<IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl
+	</IMPORT>
+	<IMPORT>com.redknee.app.crm.bundle.*</IMPORT>
+	<IMPORT>com.redknee.app.crm.delivery.email.*</IMPORT>
+	<IMPORT>com.redknee.app.crm.support.*</IMPORT>
+	<IMPORT>com.redknee.app.crm.filter.AllowedScriptPredicate</IMPORT>
+	<IMPORT>com.redknee.framework.core.bean.ScriptLanguageEnum</IMPORT>
+	<IMPORT>com.redknee.framework.xhome.auth.bean.*</IMPORT>
+	<IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+	<IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+	<IMPORT>com.redknee.framework.xhome.webcontrol.TextAreaWebControl
+	</IMPORT>
+	<IMPORT>com.redknee.framework.xhome.webcontrol.KeyWebControlOptionalValue
+	</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bundle.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.delivery.email.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.filter.AllowedScriptPredicate</IMPORT>
+    <IMPORT>com.redknee.framework.core.bean.ScriptLanguageEnum</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.auth.bean.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.TextAreaWebControl</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.KeyWebControlOptionalValue</IMPORT>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ValueCalculatorProxy</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY required="y">
+			<NAME>delegate</NAME>
+			<TYPE type="entity">com.redknee.app.crm.calculator.ValueCalculator</TYPE>
+			<web-control>new
+				EntityOneRowSelectionWebControl(com.redknee.app.crm.calculator.ValueCalculator.class)
+			</web-control>
+			<HELP>The type of entity used to perform the constant's value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>StructureChildValueCalculator</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		
+		<PROPERTY>
+			<NAME>skipForEmptyString</NAME>
+			<TYPE>boolean</TYPE>
+			<DEFAULT>true</DEFAULT>
+			<web-control>new CheckBoxWebControl("y","n",true)</web-control>
+			<HELP>If enabled, the complete element would not be included.</HELP>
+		</PROPERTY>
+		
+		<PROPERTY required="y">
+			<NAME>delegate</NAME>
+			<TYPE type="entity">com.redknee.app.crm.calculator.ValueCalculator</TYPE>
+			<web-control>new
+				EntityOneRowSelectionWebControl(com.redknee.app.crm.calculator.ValueCalculator.class)
+			</web-control>
+			<HELP>The type of entity used to perform the constant's value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ConstantValueCalculator</NAME>
+		<LABEL></LABEL>
+		<DESC>String.valueOf(bean.getValue())</DESC>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>value</NAME>
+			<TYPE>Object</TYPE>
+			<!-- As far as GUI display is concerned, treat this as a reasonably long 
+				String. -->
+			<web-control>new TextFieldWebControl(50, 512)</web-control>
+
+			<DEFAULT>null</DEFAULT>
+			<HELP>Static object that is to be returned by this calculator.</HELP>
+		</PROPERTY>
+	</ENTITY>
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ContextKeyCopyingValueCalculator</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>contextKey</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>256</WIDTH>
+			<DISPLAYWIDTH>50</DISPLAYWIDTH>
+			<HELP>Key to look for in context</HELP>
+		</PROPERTY>
+		
+		<PROPERTY>
+			<NAME>contextNewKey</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>256</WIDTH>
+			<DISPLAYWIDTH>50</DISPLAYWIDTH>
+			<HELP>New Key with which the object should be put in ctx</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>UserInputValueCalculator</NAME>
+
+		<LABEL></LABEL>
+		<EXTENDS>ConstantValueCalculator</EXTENDS>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>DateFormattingValueCalculator</NAME>
+		<LABEL></LABEL>
+
+		<DESC>bean.getFormat()</DESC>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY required="y">
+			<NAME>format</NAME>
+			<TYPE>String</TYPE>
+
+			<WIDTH>60</WIDTH>
+			<DEFAULT>com.redknee.framework.xhome.support.DateUtil.DATE_FORMAT_PATTERN
+			</DEFAULT>
+			<HELP>Format to use when displaying date fields.</HELP>
+		</PROPERTY>
+	</ENTITY>
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>DateParsingValueCalculator</NAME>
+		<LABEL></LABEL>
+
+		<DESC>bean.getFormat()</DESC>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY required="y">
+			<NAME>format</NAME>
+			<TYPE>String</TYPE>
+
+			<WIDTH>60</WIDTH>
+			<DEFAULT>com.redknee.framework.xhome.support.DateUtil.DATE_FORMAT_PATTERN
+			</DEFAULT>
+			<HELP>Format to use when parsing date fields.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>LanguageFormattingValueCalculator</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>CurrencyFormattingValueCalculator</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<!-- TODO: Extract this out to its own proxy calculator that does absolute 
+				value calculations! -->
+			<NAME>absoluteValue</NAME>
+			<LABEL>Show Absolute Value</LABEL>
+			<TYPE>boolean</TYPE>
+			<web-control>new CheckBoxWebControl()</web-control>
+			<HELP>Whether to format this value as an absolute value</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>PropertyBasedValueCalculator</NAME>
+		<LABEL></LABEL>
+		<DESC>bean.getBeanClassName()</DESC>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>beanClassName</NAME>
+			<LABEL>Bean's Class Name</LABEL>
+			<WIDTH>512</WIDTH>
+			<DISPLAYWIDTH>32</DISPLAYWIDTH>
+
+			<web-control>new ClassnameWebControl()</web-control>
+			<HELP>The class name of the bean whose property is to be chosen for
+				value calculation.</HELP>
+		</PROPERTY>
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+
+			<WebPreRow><![CDATA[
+                if (bean.getBeanClassName() != null && bean.getBeanClassName().trim().length() > 0)
+                {
+                    try
+                    {
+                        ((PropertyInfoSelectWebControl)getPropertyWebControl()).setXInfo(com.redknee.app.crm.support.XInfoSupportHelper.get(ctx).getXInfo(ctx, bean.getBeanClassName()));
+                    }
+                    catch(final ClassNotFoundException cnfe)
+                    {
+                        //Ignore.It is being handled by the ClassnameWebControl used.
+                    }
+            ]]></WebPreRow>
+			<WebPostRow><![CDATA[
+                }
+                ]]></WebPostRow>
+			<web-control>new PropertyInfoSelectWebControl(UserXInfo.instance())
+			</web-control>
+			<HELP>The bean's property which should be considered for value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ServiceFee2ValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>ServiceFee2.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(ServiceFee2XInfo.instance())
+			</web-control>
+			<HELP>The service's property which should be considered for value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>AuxiliaryServiceValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>AuxiliaryService.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(AuxiliaryServiceXInfo.instance())
+			</web-control>
+			<HELP>The Auxiliary Service's property which should be considered for
+				value calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ServicePackagePropertyValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>ServicePackage.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(ServicePackageXInfo.instance())
+			</web-control>
+			<HELP>The Service Package's property which should be considered for
+				value calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ServicePackageFeePropertyValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>ServicePackageFee.class.getName()</DEFAULT>
+		</PROPERTY>
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(ServicePackageFeeXInfo.instance())
+			</web-control>
+			<HELP>The Service Package Fee's property which should be considered
+				for value calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>BundleFeePropertyValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+
+		<LABEL></LABEL>
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>BundleFee.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(BundleFeeXInfo.instance())
+			</web-control>
+			<HELP>The Bundle Fee's property which should be considered for value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>BundleProfilePropertyValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>BundleProfile.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(BundleProfileXInfo.instance())
+			</web-control>
+			<HELP>The Bundle Profile's property which should be considered for
+				value calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>TransactionValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>Transaction.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(TransactionXInfo.instance())
+			</web-control>
+			<HELP>The transaction's property which should be considered for value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ServiceValueCalculator</NAME>
+		<DESC>bean.getBeanClassName()</DESC>
+		<LABEL></LABEL>
+
+		<EXTENDS>PropertyBasedValueCalculator</EXTENDS>
+
+		<PROPERTY mode="hidden">
+			<NAME>beanClassName</NAME>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>Service.class.getName()</DEFAULT>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>property</NAME>
+			<LABEL>Bean Property</LABEL>
+			<TYPE>PropertyInfo</TYPE>
+			<web-control>new
+				PropertyInfoSelectWebControl(ServiceXInfo.instance())</web-control>
+			<HELP>The service's property which should be considered for value
+				calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>CollectionValueCalculator</NAME>
+		<LABEL></LABEL>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>templateType</NAME>
+			<TYPE>int</TYPE>
+			<LABEL>Template Type</LABEL>
+			<web-control>new
+				com.redknee.framework.xhome.webcontrol.EnumIndexWebControl(RepeatingTemplateTypeEnum.COLLECTION,
+				true)</web-control>
+			<DEFAULT>RepeatingTemplateTypeEnum.SERVICE_INDEX</DEFAULT>
+			<HELP>The type of section to repeat.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>CollectionFormattingValueCalculator</NAME>
+		<LABEL></LABEL>
+
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>separator</NAME>
+			<TYPE>Object</TYPE>
+			<!-- As far as GUI display is concerned, treat this as a reasonably long 
+				String. -->
+			<web-control>new TextFieldWebControl(50, 512)</web-control>
+			<DEFAULT>null</DEFAULT>
+			<HELP>Separator for this collection. Leave it empty for a new line.
+			</HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>separatorAfterLastElement</NAME>
+			<LABEL>Separator after last element</LABEL>
+			<TYPE>boolean</TYPE>
+			<!-- As far as GUI display is concerned, treat this as a reasonably long 
+				String. -->
+			<DEFAULT>false</DEFAULT>
+			<HELP>Indicates whether or not to include a separator after the last
+				element for this collection.</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ShellValueCalculator</NAME>
+		<LABEL></LABEL>
+		<DESC>String.valueOf(bean.getScriptType())</DESC>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<HELP>Indicates the programming style used to execute the script.
+			</HELP>
+			<TYPE type="enum">ScriptLanguageEnum</TYPE>
+			<DEFAULT>ScriptLanguageEnum.BSH</DEFAULT>
+			<NAME>scriptType</NAME>
+			<web-control>new EnumWebControl(ScriptLanguageEnum.COLLECTION,
+				false).setPredicate(new AllowedScriptPredicate())</web-control>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>script</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>Integer.MAX_VALUE</WIDTH>
+			<!-- As far as GUI display is concerned, treat this as a reasonably long 
+				String. -->
+			<web-control>new TextAreaWebControl(80, 12, true)</web-control>
+			<DEFAULT>"return \"\";"</DEFAULT>
+			<HELP>Static object that is to be returned by this calculator.</HELP>
+		</PROPERTY>
+	</ENTITY>
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>CollectionIteratorValueCalculator</NAME>
+		<LABEL></LABEL>
+		<DESC>String.valueOf(bean.getScriptType())</DESC>
+		<EXTENDS>ShellValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY required="y">
+			<NAME>delegate</NAME>
+			<TYPE type="entity">com.redknee.app.crm.calculator.ValueCalculator</TYPE>
+			<web-control>new
+				EntityOneRowSelectionWebControl(com.redknee.app.crm.calculator.ValueCalculator.class)
+			</web-control>
+			<HELP>The type of entity used to perform the constant's value
+				calculation.</HELP>
+		</PROPERTY>
+
+		<PROPERTY>
+			<NAME>beanClass</NAME>
+			<LABEL>Bean's Class Name</LABEL>
+			<WIDTH>512</WIDTH>
+			<DISPLAYWIDTH>32</DISPLAYWIDTH>
+
+			<web-control>new ClassnameWebControl()</web-control>
+			<HELP>The class name of the bean whose property is to be chosen for
+				value calculation.</HELP>
+		</PROPERTY>
+	</ENTITY>	
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>MandatoryValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>throwExceptionForEmptyString</NAME>
+			<TYPE>boolean</TYPE>
+			<DEFAULT>false</DEFAULT>
+			<web-control>new CheckBoxWebControl("y","n",false)</web-control>
+			<HELP>If enabled, it will throw Exception if delegate is evaluated to be Empty String.</HELP>
+		</PROPERTY>
+		
+		<PROPERTY>
+			<NAME>errorMessage</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>200</WIDTH>
+			<DISPLAYWIDTH>40</DISPLAYWIDTH>
+			<DEFAULT>"Unable to calculate mandatory value."</DEFAULT>
+			<HELP>Message to be thrown back if unable to calculate the mandatory
+				value.</HELP>
+		</PROPERTY>
+
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>DefaultValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>useDefaultForEmptyString</NAME>
+			<TYPE>boolean</TYPE>
+			<DEFAULT>false</DEFAULT>
+			<web-control>new CheckBoxWebControl("y","n",true)</web-control>
+			<HELP>If enabled, default value will be used if the original value
+				calculated is an empty string.</HELP>
+		</PROPERTY>
+
+		<PROPERTY required="y">
+			<NAME>defaultValue</NAME>
+			<TYPE type="entity">com.redknee.app.crm.calculator.ValueCalculator</TYPE>
+			<web-control>new
+				EntityOneRowSelectionWebControl(com.redknee.app.crm.calculator.ValueCalculator.class)
+			</web-control>
+			<HELP>The type of entity used to perform the constant's value
+				calculation.
+			</HELP>
+		</PROPERTY>
+
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>OptionalElementValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+
+		<PROPERTY>
+			<NAME>skipForEmptyString</NAME>
+			<TYPE>boolean</TYPE>
+			<DEFAULT>true</DEFAULT>
+			<web-control>new CheckBoxWebControl("y","n",true)</web-control>
+			<HELP>If enabled, the complete element would not be included.</HELP>
+		</PROPERTY>
+
+		<PROPERTY required="n">
+			<NAME>preElementContent</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>""</DEFAULT>
+			<web-control>new TextAreaWebControl(50, 5)</web-control>
+			<HELP>The Element Preceeding the Calculated Value</HELP>
+		</PROPERTY>
+
+		<PROPERTY required="n">
+			<NAME>postElementContent</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>512</WIDTH>
+			<DEFAULT>""</DEFAULT>
+			<web-control>new TextAreaWebControl(50, 5)</web-control>
+			<HELP>The Element post the Calculated Value</HELP>
+		</PROPERTY>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>EmptyStringValueCalculator</NAME>
+		<EXTENDS>AbstractValueCalculator</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator
+		</IMPLEMENTS>
+	</ENTITY>
+
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>NestedValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator</IMPLEMENTS>
+		<PROPERTY>
+            <NAME>description</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>200</WIDTH>
+            <DISPLAYWIDTH>40</DISPLAYWIDTH>
+        </PROPERTY>
+        
+		<PROPERTY>
+			<NAME>innerNestedValueCalculator</NAME>
+			<TYPE type="bean">ValueCalculatorProxy</TYPE>
+		</PROPERTY>
+		
+		
+	</ENTITY>
+	
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>ListValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator</IMPLEMENTS>
+		<PROPERTY>
+            <NAME>description</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>200</WIDTH>
+            <DISPLAYWIDTH>40</DISPLAYWIDTH>
+        </PROPERTY>
+        
+		<PROPERTY>
+			<NAME>listOfValueCalculators</NAME>
+			<TYPE of="ValueCalculatorProxy">List</TYPE>
+			<DEFAULT>new ArrayList()</DEFAULT>
+		</PROPERTY>
+	</ENTITY>
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>StructureValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator</IMPLEMENTS>
+		
+
+		<PROPERTY>
+			<NAME>listOfValueCalculators</NAME>
+			<TYPE of="StructureChildValueCalculator">List</TYPE>
+			<DEFAULT>new ArrayList()</DEFAULT>
+		</PROPERTY>
+	</ENTITY>
+	
+	
+	<ENTITY abstract="true" generate-home="false" table-mode="all">
+		<PACKAGE>com.redknee.app.crm.calculator</PACKAGE>
+		<NAME>InternalKeyValueCalculator</NAME>
+		<EXTENDS>ValueCalculatorProxy</EXTENDS>
+
+		<IMPLEMENTS>com.redknee.app.crm.calculator.ValueCalculator</IMPLEMENTS>
+		<PROPERTY>
+            <NAME>description</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>200</WIDTH>
+            <DISPLAYWIDTH>40</DISPLAYWIDTH>
+        </PROPERTY>
+        
+		<PROPERTY>
+			<NAME>internalKey</NAME>
+			<TYPE>String</TYPE>
+			<WIDTH>512</WIDTH>
+            <DISPLAYWIDTH>32</DISPLAYWIDTH>
+		</PROPERTY>
+		
+	</ENTITY>
+	
+</MODEL>

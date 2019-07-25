@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.account.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.resource.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.resource</PACKAGE>
+        <NAME>ResourceDeviceGroupSearch</NAME>
+        <HELP>Search bean for resource Device</HELP>
+
+        <IMPLEMENTS>com.redknee.framework.xhome.msp.SpidAware</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>groupID</NAME>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(ResourceDeviceGroupSearch.DEFAULT_GROUPID)</web-control>
+            <HELP><![CDATA[
+                <p>ID of the Resource Device Group.</p>
+                ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider ID</LABEL>
+            <TYPE>int</TYPE>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>The service provider ID.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>subscriptionType</NAME>
+            <LABEL>Subscription Type</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new SubscriptionTypeKeyWebControl(1, false, new KeyWebControlOptionalValue("--", Long.valueOf(ResourceDeviceGroupSearch.DEFAULT_SUBSCRIPTIONTYPE)))</web-control>
+            <HELP><![CDATA[
+                <p>Resource Device Subscription Type.</p>
+                ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

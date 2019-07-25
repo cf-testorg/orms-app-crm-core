@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.delivery.email</PACKAGE>
+        <NAME>ScriptMsgBoxFactory</NAME>
+        <LABEL>Script-Based MsgBox Generator</LABEL>
+        
+        <IMPLEMENTS>MsgBoxFactory</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>script</NAME>
+            <TYPE type="bean">com.redknee.framework.core.bean.Script</TYPE>
+            <DEFAULT>new com.redknee.framework.core.bean.Script()</DEFAULT>
+            <HELP>Script used to instantiate a MsgBox</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

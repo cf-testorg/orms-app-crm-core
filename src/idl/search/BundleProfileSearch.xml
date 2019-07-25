@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<MODEL>
+   <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+   <IMPORT>com.redknee.app.crm.bundle.*</IMPORT>
+   
+   <ENTITY generate-table-webcontrol="false" generate-home="false">
+      <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+      <NAME>BundleProfileSearch</NAME>
+      <HELP>Search for a Bundle Profile by its ID, Name, Type and SPID. Exact matches are displayed. Enter multiple criteria to narrow down search results.</HELP>
+
+      <CODE template="WebRow">startColumns(out);</CODE>
+
+      <PROPERTY>
+         <NAME>id</NAME>
+         <LABEL>Bundle ID</LABEL>
+         <TYPE>int</TYPE>
+         <WIDTH>22</WIDTH>
+         <DEFAULT>-1</DEFAULT>
+	 <web-control>new OptionalLongWebControl()</web-control>
+	 <HELP><![CDATA[
+		 <p>Unique ID representing this bundle. Exact matches are displayed.</p>
+		 ]]></HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">nextColumn(out);</CODE>
+
+      <PROPERTY>
+         <NAME>name</NAME>
+	 <LABEL>Bundle Name</LABEL>
+	 <HELP><![CDATA[
+		 <p>Name of this bundle. Exact matches are displayed.</p>
+		 ]]></HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">nextColumn(out);</CODE>
+
+      <PROPERTY>
+         <NAME>type</NAME>
+         <TYPE>int</TYPE>
+         <DEFAULT>-1</DEFAULT>
+         <web-control>new EnumIndexOptionalWebControl(BundleTypeEnum.COLLECTION, "--Select All--")</web-control>
+         <HELP>Type of bundle. Select from the drop-down list. Exact matches are displayed.</HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">nextColumn(out);</CODE>
+
+      <PROPERTY>
+         <NAME>spid</NAME>
+         <LABEL>Service Provider ID</LABEL>
+         <TYPE>int</TYPE>
+         <DEFAULT>9999</DEFAULT>
+         <!-- [Cindy]: Rely on the web control for MIN and MAX instead. -->
+         <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+	 <web-control>new SpidKeyWebControl(1, false, new KeyWebControlOptionalValue("--",new Integer(9999)))</web-control>
+	 <HELP><![CDATA[
+		 <p>ID of the service provider that this bundle belongs to. Exact matches are displayed.</p>
+		 <p>Use the drop-down list to select the appropriate choice.  The list contains providers from the <b>Service Providers</b> page.</p>
+		 ]]></HELP>
+      </PROPERTY>
+
+      <CODE template="WebRow">endColumns(out);</CODE>
+   </ENTITY>
+</MODEL>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>com.redknee.app.crm.technology.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.xhome.CustomEnumCollection</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.xenum.Enum</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>GSMPackageSearch</NAME>
+        <LABEL>SIM Package Search</LABEL>
+        <HELP>Search of an account based on SIM Package</HELP>
+
+        <PROPERTY>
+            <WebPreRow>startColumns(out);</WebPreRow>
+            <NAME>IMSI</NAME>
+            <LABEL>IMSI/MIN</LABEL>
+            <WIDTH>15</WIDTH>
+            <HELP>Search by the IMSI/MIN of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>packId</NAME>
+            <LABEL>SIM Package ID</LABEL>
+            <WIDTH>20</WIDTH>
+            <HELP>Search by the SIM package ID of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>serialNo</NAME>
+            <WIDTH>20</WIDTH>
+            <HELP>Search by serial number of the subscriber</HELP>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+
+    </ENTITY>
+
+    <ENTITY generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>TDMAPackageSearch</NAME>
+        <LABEL>TDMA/CDMA Package Search</LABEL>
+        <HELP>Search of an account based on SIM Package</HELP>
+
+        <PROPERTY>
+            <WebPreRow>startColumns(out);</WebPreRow>
+            <NAME>IMSI</NAME>
+            <LABEL>IMSI/MIN</LABEL>
+            <WIDTH>15</WIDTH>
+            <HELP>Search by the IMSI/MIN of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>packId</NAME>
+            <LABEL>Package ID</LABEL>
+            <WIDTH>20</WIDTH>
+            <HELP>Search by the SIM package ID of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>serialNo</NAME>
+            <WIDTH>15</WIDTH>
+            <HELP>Search by serial number of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>nextColumn(out);</WebPreRow>
+            <NAME>technology</NAME>
+            <TYPE type="enum">TechnologyEnum</TYPE>
+            <WIDTH>15</WIDTH>
+            <web-control>new EnumWebControl(new CustomEnumCollection(TechnologyEnum.TDMA, TechnologyEnum.CDMA))</web-control>
+            <HELP>Type of technology used - select from the drop-down list.</HELP>
+            <WebPostRow>endColumns(out);</WebPostRow>
+        </PROPERTY>
+
+    </ENTITY>
+    <ENTITY generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>VSATPackageSearch</NAME>
+        <LABEL>VSAT Package Search</LABEL>
+        <HELP>Search of an account based on VSAT Package</HELP>
+        <WebStartColumns/>
+        <PROPERTY>
+            <NAME>packId</NAME>
+            <LABEL>Package ID</LABEL>
+            <WIDTH>20</WIDTH>
+            <HELP>Find using Package ID</HELP>
+        </PROPERTY>
+        <WebNextColumn/>
+        <PROPERTY>
+            <NAME>channel</NAME>
+            <LABEL>Channel</LABEL>
+            <WIDTH>15</WIDTH>
+            <HELP>Channel</HELP>
+        </PROPERTY>
+		<WebNextColumn/>
+		<PROPERTY>
+			<NAME>vsatId</NAME>
+			<LABEL>VSAT ID</LABEL>
+			<WIDTH>15</WIDTH>
+			<HELP>VSAT ID</HELP>
+		</PROPERTY>
+		<WebNextColumn/>        
+        <PROPERTY>
+            <NAME>port</NAME>
+            <LABEL>Port</LABEL>
+            <WIDTH>15</WIDTH>
+            <HELP>Port</HELP>
+        </PROPERTY>
+        <WebEndColumns/>        
+    </ENTITY>
+
+</MODEL>

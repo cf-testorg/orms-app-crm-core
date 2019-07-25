@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-table-webcontrol = "false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>TaxExemptionInclusionSearch</NAME>
+        <LABEL>Tax Exemption Inclusion Search</LABEL>
+        <HELP>Search for a TEIC(Tax Exemption Inclusion Class)</HELP>
+        <WebStartColumns/>
+        <PROPERTY>
+            <NAME>teicId</NAME>
+            <LABEL>TEIC Identifier</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <HELP>TEIC Identifier</HELP>
+        </PROPERTY>
+        <WebNextColumn/>
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>The service provider identifier</HELP>
+        </PROPERTY>
+        <WebNextColumn/>
+        <PROPERTY>
+            <NAME>name</NAME>
+            <LABEL>Name</LABEL>
+            <HELP>TEIC Name</HELP>            
+        </PROPERTY>
+        <WebEndColumns/>
+    </ENTITY>
+</MODEL>

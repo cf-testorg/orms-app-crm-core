@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>DebtCollectionAgencySearch</NAME>
+        <HELP>Debt Collection Agency search bean.</HELP>
+        <IMPORT>com.redknee.framework.xhome.msp.SpidKeyWebControl</IMPORT>
+
+        <PROPERTY>
+            <NAME>id</NAME>
+            <LABEL>Identifier</LABEL>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+        <HELP><![CDATA[
+            <p>Unique ID representing the debt collection agency.</p>
+            <p>Must be a long.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider</LABEL>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+        <HELP><![CDATA[
+            <p>Service provider that the charging template belongs to.</p>
+<p>Select the appropriate Service Provider from the drop down list. The list contains providers from the 
+                <b>Service Providers</b> page.</p>
+            ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <WIDTH>50</WIDTH>
+            <LABEL>Debt Collection Agency Name</LABEL>
+        <HELP><![CDATA[
+            <p>Name of the Debt Collection Agency.</p>
+            ]]></HELP>
+        </PROPERTY>
+    </ENTITY>
+
+</MODEL>
+

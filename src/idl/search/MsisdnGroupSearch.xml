@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+   <IMPORT>java.util.List</IMPORT>
+   <IMPORT>java.util.ArrayList</IMPORT>
+   <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+<ENTITY generate-table-webcontrol="false">
+	<PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+	<NAME>MsisdnGroupSearch</NAME>
+	<LABEL>Mobile Number Group Search</LABEL>
+	<HELP>Search of an Mobile Number Group based on Group Id or Group Name</HELP>
+	
+	<PROPERTY>
+		<WebPreRow>startColumns(out);</WebPreRow>
+		<NAME>id</NAME>
+		<LABEL>Group Id</LABEL>
+		<TYPE>int</TYPE>
+		<DEFAULT>-1</DEFAULT>
+                <MIN>0</MIN>
+                <web-control>new OptionalLongWebControl()</web-control>
+		<HELP>Search by the Mobile Number Group's Group Id. Exact Matches are displayed.</HELP>
+	</PROPERTY>
+	
+	<PROPERTY>
+		<WebPreRow>nextColumn(out);</WebPreRow>
+		<NAME>name</NAME>
+		<LABEL>Group Name</LABEL>
+		<WIDTH>30</WIDTH>
+		<HELP>Search by the Mobile Number Group's Name</HELP>
+		<WebPostRow>endColumns(out);</WebPostRow>
+	</PROPERTY>
+
+</ENTITY>
+
+</MODEL>

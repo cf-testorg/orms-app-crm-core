@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.CalendarSupportHelper</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>TransactionSearch</NAME>
+        <LABEL>Transaction Search</LABEL>
+        <HELP>Search for a transaction</HELP>
+        <PRIMARYKEY>identifierFake</PRIMARYKEY>
+
+        <PROPERTY mode="hidden">
+            <NAME>identifierFake</NAME>
+            <LABEL>Transaction Method Identifier</LABEL>
+            <TYPE>long</TYPE>
+            <AUTOINC>
+                <INC>1</INC>
+                <START>1</START>
+            </AUTOINC>
+            <HELP>A unique number for this method when it is successfully created</HELP>
+        </PROPERTY>
+
+        <!-- No longer used with new subMenu mode but kept in case needed in future and so not to break SearchAgent. -->
+        <PROPERTY mode="hidden">
+            <NAME>BAN</NAME>
+            <PERMISSION
+                read="app.crm.account"
+                write="app.crm.account" />
+            <LABEL>Acct#</LABEL>
+            <WIDTH>21</WIDTH>
+            <HELP>The account number of the subscriber</HELP>
+        </PROPERTY>
+
+        <PROPERTY mode="hidden">
+            <NAME>MSISDN</NAME>
+            <WIDTH>20</WIDTH>
+            <!-- postLabel>  OR/AND</postLabel-->
+            <HELP>The MSISDN (phone number) of the subscriber</HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">startColumns(out);</CODE>
+        <PROPERTY>
+            <NAME>startDate</NAME>
+            <DEFAULT>CalendarSupportHelper.get().getDaysBefore(new Date(), 6)</DEFAULT>
+            <TYPE>Date</TYPE>
+            <generate-default>no</generate-default>
+            <HELP>Start date of the date range to search for.</HELP>
+        </PROPERTY>
+
+        <PROPERTY mode="hidden">
+            <NAME>subscriberID</NAME>
+            <LABEL>Subscriber ID</LABEL>
+            <WIDTH>21</WIDTH>
+            <HELP>The ID of the subscriber</HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">nextColumn(out);</CODE>
+        <PROPERTY>
+            <NAME>endDate</NAME>
+            <DEFAULT>new Date()</DEFAULT>
+            <TYPE>Date</TYPE>
+            <generate-default>no</generate-default>
+            <HELP>End date of the date range to search for.</HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">nextColumn(out);</CODE>
+        <PROPERTY>
+            <NAME>limit</NAME>
+            <TYPE>int</TYPE>
+            <WIDTH>4</WIDTH>
+            <DEFAULT>25</DEFAULT>
+            <MIN>1</MIN>
+            <MAX>1000</MAX>
+            <HELP>Limit the number of rows returned.</HELP>
+        </PROPERTY>
+        <CODE template="WebRow">endColumns(out);</CODE>
+    </ENTITY>
+</MODEL>

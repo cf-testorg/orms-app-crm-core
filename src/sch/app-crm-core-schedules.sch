@@ -1,0 +1,13 @@
+;; cron entries
+(let ((ctx (getContext ctx "core"))) (bindHome ctx com.redknee.framework.core.cron.CronEntryHome.class com.redknee.framework.core.cron.CronEntry.class))
+
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "4")(setBeanProperty b "Minutes" "1")(setBeanProperty b "Name" "CRM_Daily_4AM") b)))
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "6")(setBeanProperty b "Minutes" "1")(setBeanProperty b "Name" "CRM_Daily_6AM") b)))
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "2")(setBeanProperty b "Minutes" "1")(setBeanProperty b "Name" "CRM_Daily_2AM") b)))
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "8,9,10,11,12,13,14,15,16,17")(setBeanProperty b "Minutes" "0")(setBeanProperty b "Name" "CRM_Daytime_Hours")(setBeanProperty b "Predicate" (let ((b (com.redknee.framework.xhome.elang.True.instance)))  b)) b)))
+
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "4")(setBeanProperty b "Minutes" "0")(setBeanProperty b "DaysOfWeek" "2")(setBeanProperty b "Name" "CRM_Weekly_One") b)))
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "4")(setBeanProperty b "Minutes" "0")(setBeanProperty b "DaysOfWeek" "3")(setBeanProperty b "Name" "CRM_Weekly_Two") b)))
+
+;; There is a typo in this schedule name (appended with a space).  This should be removed, but will leave it just in case it is in use by existing scheduled tasks
+(let ((ctx (getContext ctx "core"))) (homeCreateOrStore (.get ctx com.redknee.framework.core.cron.CronEntryHome.class) (let ((b (com.redknee.framework.core.cron.CronEntry.))) (setBeanProperty b "Hours" "4")(setBeanProperty b "Minutes" "1")(setBeanProperty b "Name" "CRM_Daily_4AM ") b)))

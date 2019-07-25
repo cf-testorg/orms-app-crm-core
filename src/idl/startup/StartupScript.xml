@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>java.util.*</IMPORT>
+
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+        <NAME>StartupScripts</NAME>
+        <HELP><![CDATA[This configuration allows post-deployment customization of startup behaviour.]]></HELP>
+
+        <PROPERTY>
+            <WebPreRow>com.redknee.framework.xhome.web.action.ActionMgr.disableActions(subCtx);</WebPreRow>
+            <NAME>preScripts</NAME>
+            <LABEL>Pre-Startup Scripts</LABEL>
+            <TYPE of="StartupScriptHolder">List</TYPE>
+            <DEFAULT>new ArrayList()</DEFAULT>
+            <HELP><![CDATA[Scripts configured here will be executed before application installation logic but after core Framework installation logic.]]></HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>postScripts</NAME>
+            <LABEL>Post-Startup Scripts</LABEL>
+            <TYPE of="StartupScriptHolder">List</TYPE>
+            <DEFAULT>new ArrayList()</DEFAULT>
+            <HELP><![CDATA[Scripts configured here will be executed after all application installation logic.]]></HELP>
+        </PROPERTY>
+        
+    </ENTITY>
+
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+        <NAME>StartupScriptHolder</NAME>
+        <LABEL>Script</LABEL>
+
+        <PROPERTY>
+            <NAME>script</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>256</WIDTH>
+            <DISPLAYWIDTH>50</DISPLAYWIDTH>
+            <web-control>new com.redknee.framework.core.bean.ScriptKeyWebControl()</web-control>
+            <TABLE-ORDER>A</TABLE-ORDER>
+            <HELP><![CDATA[Script saved under Core -> Runtime -> Scripts that will be executed.]]></HELP>
+        </PROPERTY>
+        
+    </ENTITY>
+    
+</MODEL>

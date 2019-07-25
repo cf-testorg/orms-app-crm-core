@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MODEL>
+
+    <!-- generate-home for Identity support - Joel -->
+    <ENTITY no-deprecate-constructor="y" table-mode="all" generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean</PACKAGE>
+        <NAME>MsisdnStringHolder</NAME>
+        <LABEL/>
+            <CODE template="JavaBean"><![CDATA[
+        /**
+         * backward compatibility
+         */
+              public String getString()
+        {
+          return getMsisdn();
+        }
+
+              public void setString(String msisdn)
+        {
+          setMsisdn(msisdn);
+        }
+        ]]></CODE>
+
+        <PROPERTY>
+            <NAME>msisdn</NAME>
+            <LABEL/>
+            <WIDTH>1024</WIDTH>
+            <DISPLAYWIDTH>30</DISPLAYWIDTH>
+            <DEFAULT>""</DEFAULT>
+            <HIDDEN/>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

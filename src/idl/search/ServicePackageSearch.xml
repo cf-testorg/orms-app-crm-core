@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+    <IMPORT>java.util.Iterator</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>java.util.Set</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.HashSet</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.EnumWebControl</IMPORT>
+
+    <ENTITY generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>ServicePackageSearch</NAME>
+        <HELP>Search for packages by entering their IDs, Names or SPIDs. Narrow down the search by entering multiple criteria. Exact matches are displayed.</HELP>
+
+        <CODE template="WebRow">startColumns(out);</CODE>
+
+        <PROPERTY>
+            <NAME>id</NAME>
+            <TYPE>int</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <web-control>new OptionalLongWebControl(-1)</web-control>
+            <TABLE-ORDER>A</TABLE-ORDER>
+            <HELP>Search by Package ID. Exact matches are displayed.</HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">nextColumn(out);</CODE>
+
+        <PROPERTY>
+            <NAME>name</NAME>
+            <TYPE>String</TYPE>
+            <WIDTH>120</WIDTH>
+            <DISPLAYWIDTH>30</DISPLAYWIDTH>
+            <TABLE-ORDER>B</TABLE-ORDER>
+            <HELP>Search by Package Name. Exact matches are displayed.</HELP>
+        </PROPERTY>
+
+        <CODE template="WebRow">nextColumn(out);</CODE>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>SPID</LABEL>
+            <TYPE>int</TYPE>
+            <web-control>new SpidKeyWebControl(1, false, true)</web-control>
+            <HELP>Search by Service Provider ID the package belongs to. Exact matches are displayed.</HELP>
+            <DEFAULT>-1</DEFAULT>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+        </PROPERTY>
+
+        <CODE template="WebRow">endColumns(out);</CODE>
+
+    </ENTITY>
+
+</MODEL>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.resource.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.resource</PACKAGE>
+        <NAME>ResourceDeviceSearch</NAME>
+        <HELP>Search bean for resource Device</HELP>
+
+        <IMPORT>com.redknee.framework.xhome.webcontrol.EnumIndexOptionalWebControl</IMPORT>
+
+        <IMPLEMENTS>com.redknee.framework.xhome.msp.SpidAware</IMPLEMENTS>
+
+        <PROPERTY>
+            <NAME>resourceID</NAME>
+            <TYPE>String</TYPE>
+            <HELP><![CDATA[
+                <p>ID of the Resource Device.</p>
+                ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>spid</NAME>
+            <LABEL>Service Provider ID</LABEL>
+            <TYPE>int</TYPE>
+            <!-- [Cindy]: Rely on the web control for MIN, MAX, and DEFAULT instead. -->
+            <REFERENCE model="com.redknee.app.crm.bean.CRMSpid" property="id"/>
+            <web-control>new SpidKeyWebControl(1, true, true)</web-control>
+            <HELP>The service provider ID.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>groupID</NAME>
+            <TYPE>long</TYPE>
+            <DEFAULT>-1</DEFAULT>
+            <msp/>
+            <web-control>new ResourceDeviceGroupKeyWebControl(1, false, new KeyWebControlOptionalValue("--", Long.valueOf(ResourceDeviceSearch.DEFAULT_GROUPID)))</web-control>
+            <HELP><![CDATA[
+                <p>ID of the Resource Device Group.</p>
+                ]]></HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>state</NAME>
+            <TYPE>int</TYPE>
+            <web-control>new EnumIndexOptionalWebControl(ResourceDeviceStateEnum.COLLECTION, "--Select All--")</web-control>
+            <HELP>The state.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>dealerCode</NAME>
+            <msp/>
+            <DEFAULT>AbstractKeyWebControl.DEFAULT_OPTIONAL_VALUE</DEFAULT>
+            <web-control>new GenericSpidAwareKeyAdaptingWebControlProxy &lt;DealerCode&gt; (DealerCode.class, new DealerCodeKeyWebControl(), "code")</web-control>
+            <HELP>The dealer code.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>serialNumber</NAME>
+            <LABEL>Serial #</LABEL>
+            <TYPE>String</TYPE>
+            <HELP>Device Serial Number.</HELP>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

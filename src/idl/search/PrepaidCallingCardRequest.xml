@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>PrepaidCallingCardRequest</NAME>
+        <LABEL>Prepaid Calling Card Search</LABEL>
+        <DESC>bean.getSerial()</DESC>
+        <HELP></HELP>
+
+        <PROPERTY required="y" primarykey="yes" mode="read-write">
+            <NAME>serial</NAME>
+            <LABEL>Serial #</LABEL>
+            <TYPE>String</TYPE>
+            <WIDTH>40</WIDTH>
+            <DISPLAYWIDTH>20</DISPLAYWIDTH>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

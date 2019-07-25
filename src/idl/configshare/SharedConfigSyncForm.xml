@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<MODEL>
+    <IMPORT>java.util.Date</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <enum package="com.redknee.app.crm.configshare" name="SyncMode">
+        <choice name="SYNC_SINGLE_RECORD" label="Sync Single Record" />
+        <choice name="SYNC_ALL" label="Sync All" />
+        <choice name="SYNC_ALL_FOR_SPID" label="Sync All For Spid" />
+    </enum>
+   
+    <ENTITY generate-home="false">
+        <PACKAGE>com.redknee.app.crm.configshare</PACKAGE>
+        <NAME>SharedConfigSyncForm</NAME>
+        <LABEL>Shared Configuration Synchronization Tool</LABEL>
+        <HELP>Form used to synchronize configuration that is shared by multiple CRM applications.  Participating applications include CRM, Invoice Server, and Mediation Gateway.</HELP>
+        
+        <!-- Push All is not supported because order might matter for such a sync.
+             For example, SPIDs may have to be sync'd before tax authorities.  As
+             of initial feature development, the dependency order can't be determined. -->
+        <PROPERTY mode="hidden">
+            <NAME>filteredSync</NAME>
+            <LABEL>Sync Mode</LABEL>
+            <TYPE>boolean</TYPE>
+            <DEFAULT>true</DEFAULT>
+            <web-control>new BooleanWebControl("Filtered Push", "Push All", true)</web-control>
+            <HELP>A flag to indicate the type of sync that should be performed.  Currently only push is supported.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <WebPreRow>if (bean.isFilteredSync()) {</WebPreRow>
+            <NAME>syncCriteria</NAME>
+            <TYPE of="SharedConfigSyncCriteria">List</TYPE>
+            <DEFAULT>new ArrayList()</DEFAULT>
+            <WebPostRow>}</WebPostRow>
+            <HELP>List of configurations that should by synchronized.  If there is a dependency between multiple configurations, then the order must be preserved here.  For example, if SPID must be created before tax authorities can be added for that SPID, then SPID should be included before tax authorities in this list.</HELP>
+        </PROPERTY>
+    </ENTITY>
+   
+    <ENTITY generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.configshare</PACKAGE>
+        <NAME>SharedConfigSyncCriteria</NAME>
+        <LABEL>Criteria</LABEL>
+        
+        <PROPERTY>
+            <NAME>sharedBeanClass</NAME>
+            <LABEL>Class</LABEL>
+            <TYPE>String</TYPE>
+            <WIDTH>550</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <web-control>new SharedBeanKeyWebControl(true)</web-control>
+            <HELP>Type of configuration to synchronize.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>applyIdFilter</NAME>
+            <LABEL>Mode</LABEL>
+            <TYPE type="enum">SyncModeEnum</TYPE>
+            <DEFAULT>SyncModeEnum.SYNC_SINGLE_RECORD</DEFAULT>
+            <web-control>new EnumWebControl(SyncModeEnum.COLLECTION, true)</web-control>
+            <HELP>Indicates whether a single record , all records or all records for particular spid , for the given configuration type should be synchronized.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>beanIdentifier</NAME>
+            <LABEL>Identifier</LABEL>
+            <TYPE>Object</TYPE>
+            <DEFAULT>null</DEFAULT>
+            <web-control>new com.redknee.app.crm.web.control.DynamicBeanIdRHSProxyWebControl(
+                            SharedConfigSyncCriteriaXInfo.SHARED_BEAN_CLASS, 
+                            new EntityOneRowSelectionWebControl(Object.class).usingPrototypeInstantiation(true).setAllowToChoose(false))</web-control>
+            <HELP>Only applicable when mode is set to 'Sync Single Record'.  This field identifies the bean that is to be synchronized.</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+</MODEL>

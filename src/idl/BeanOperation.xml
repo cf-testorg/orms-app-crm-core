@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+   <enum package="com.redknee.app.crm.bean" name="BeanOperation" base="1">
+      <choice name="ADD" label="Add"/>
+      <choice name="UPDATE" label="Update"/>
+      <choice name="DELETE" label="Delete"/>
+   </enum>
+</MODEL>

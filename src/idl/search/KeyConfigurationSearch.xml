@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MODEL>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.Set</IMPORT>
+    <IMPORT>java.util.HashSet</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.KeyValueFeatureEnum</IMPORT>
+
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <NAME>KeyConfigurationSearch</NAME>
+        
+        <PROPERTY>
+            <NAME>feature</NAME>
+            <TYPE type="enum">KeyValueFeatureEnum</TYPE>
+            <DEFAULT>null</DEFAULT>
+            <web-control>new EnumOptionalWebControl(KeyValueFeatureEnum.COLLECTION, "--Select All--")</web-control>
+            <HELP>The feature for which this key configuration applies.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>key</NAME>
+            <WIDTH>512</WIDTH>
+            <DISPLAYWIDTH>32</DISPLAYWIDTH>
+            <postLabel>(?*)</postLabel>
+            <HELP>The key for the chosen bean class.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>userFriendlyName</NAME>
+            <postLabel>(?*)</postLabel>
+            <TABLE-ORDER>B</TABLE-ORDER>
+            <HELP>User-Friendly on-screen description of the key.</HELP>
+        </PROPERTY>
+        
+         <PROPERTY>
+            <NAME>systemDefined</NAME>
+            <postLabel>(?*)</postLabel>
+            <TYPE>boolean</TYPE>
+            <TABLE-ORDER>C</TABLE-ORDER>
+            <HELP>This is where we come to know that this key is system defined or not.</HELP>
+        </PROPERTY>
+    </ENTITY> 
+</MODEL>

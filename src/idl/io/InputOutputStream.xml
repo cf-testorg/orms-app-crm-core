@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        <NAME>FileOutputStreamFactory</NAME>
+        <LABEL>File OutputStream Generator</LABEL>
+        
+        <IMPLEMENTS>OutputStreamFactory</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>filename</NAME>
+            <WIDTH>1024</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Fully qualified filename of the file that should be written to by this OutputStream.</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        <NAME>FileInputStreamFactory</NAME>
+        <LABEL>File InputStream Generator</LABEL>
+        
+        <IMPLEMENTS>InputStreamFactory</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>filename</NAME>
+            <WIDTH>1024</WIDTH>
+            <DISPLAYWIDTH>60</DISPLAYWIDTH>
+            <HELP>Fully qualified filename of the file that should be read from by this InputStream.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>tempFile</NAME>
+            <TYPE>boolean</TYPE>
+            <DEFAULT>false</DEFAULT>
+            <HELP>Indicates whether or not this file is considered a temporary file, and if it should be deleted after processing.</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        <NAME>ScriptOutputStreamFactory</NAME>
+        <LABEL>Script-Based OutputStream Generator</LABEL>
+        
+        <IMPLEMENTS>OutputStreamFactory</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>script</NAME>
+            <TYPE type="bean">com.redknee.framework.core.bean.Script</TYPE>
+            <DEFAULT>new com.redknee.framework.core.bean.Script()</DEFAULT>
+            <HELP>Script used to instantiate a delegate java.io.OutputStream</HELP>
+        </PROPERTY>
+    </ENTITY>
+    
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        <NAME>ScriptInputStreamFactory</NAME>
+        <LABEL>Script-Based InputStream Generator</LABEL>
+        
+        <IMPLEMENTS>InputStreamFactory</IMPLEMENTS>
+        
+        <PROPERTY>
+            <NAME>script</NAME>
+            <TYPE type="bean">com.redknee.framework.core.bean.Script</TYPE>
+            <DEFAULT>new com.redknee.framework.core.bean.Script()</DEFAULT>
+            <HELP>Script used to instantiate a delegate java.io.InputStream</HELP>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        
+        <NAME>OutputStreamFactoryProxy</NAME>
+        <IMPLEMENTS>OutputStreamFactory</IMPLEMENTS>
+        
+        <HELP>This factory uses a delegate implementation to create the output stream.</HELP>
+        
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">OutputStreamFactory</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(OutputStreamFactory.class)</web-control>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.io</PACKAGE>
+        
+        <NAME>InputStreamFactoryProxy</NAME>
+        <IMPLEMENTS>InputStreamFactory</IMPLEMENTS>
+        
+        <HELP>This factory uses a delegate implementation to create the input stream.</HELP>
+        
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">InputStreamFactory</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(InputStreamFactory.class)</web-control>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>

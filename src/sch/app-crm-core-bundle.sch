@@ -1,0 +1,3 @@
+;; Create the default configuration for the BM Driver
+(let ((ctx (getContext ctx "core"))) (let ((ctx (getContext ctx "AppCrmCore"))) (bindBean ctx com.redknee.app.crm.bundle.driver.BMDriverProxy.class com.redknee.app.crm.bundle.driver.BMDriverProxy.class)))
+(let ((ctx (getContext ctx "core"))) (let ((ctx (getContext ctx "AppCrmCore"))) (let ((b (.get ctx com.redknee.app.crm.bundle.driver.BMDriverProxy.class))) (setBeanProperty b "delegate" (let ((b (com.redknee.app.crm.bundle.driver.LoggingBMDriver.))) (setBeanProperty b "Delegate" (let ((b (com.redknee.app.crm.bundle.driver.PMBMDriver.))) (setBeanProperty b "Delegate" (let ((b (com.redknee.app.crm.bundle.driver.CORBABMDriver.)))  b)) b)) b)) b)))

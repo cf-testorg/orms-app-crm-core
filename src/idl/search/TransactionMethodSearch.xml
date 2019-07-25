@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<MODEL>
+   <ENTITY generate-table-webcontrol="false">
+      <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+      <NAME>TransactionMethodSearch</NAME>
+      <LABEL>Transaction Method Search</LABEL>
+      <HELP>Search for a Transaction Method Name</HELP>
+
+      <PROPERTY>
+	      <NAME>identifier</NAME>
+	      <LABEL>Identifier</LABEL>
+         <TYPE>int</TYPE>
+         <DEFAULT>-1</DEFAULT>
+         <web-control>new OptionalLongWebControl(-1)</web-control>
+	      <HELP>A unique number for this method when it is successfully
+	       created</HELP>
+      </PROPERTY>
+      
+      <PROPERTY>
+         <NAME>name</NAME>
+         <LABEL>Name</LABEL>
+         <TYPE>String</TYPE>
+         <HELP>Transaction Method Name</HELP>
+      </PROPERTY>
+   </ENTITY>
+</MODEL>

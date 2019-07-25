@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<MODEL>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.msp.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.*</IMPORT>
+    
+    <ENTITY generate-home="false" generate-table-webcontrol="false">
+        <PACKAGE>com.redknee.app.crm.bean.search</PACKAGE>
+        <IMPORT>java.util.regex.Pattern</IMPORT>
+        <NAME>MsisdnSearch</NAME>
+        <LABEL>Mobile Number Pool Search</LABEL>
+        <HELP>Search Msisdns in Mobile Number Pool</HELP>
+        <PROPERTY>
+            <NAME>msisdn</NAME>
+            <LABEL>MDN</LABEL>
+            <WIDTH>20</WIDTH>
+            <TYPE>String</TYPE>
+        <!--    <PATTERN>^\\d*$</PATTERN> !-->
+              <HELP>A mobile phone number.</HELP>
+        </PROPERTY>
+	<PROPERTY>
+		<NAME>limit</NAME>
+		<TYPE>int</TYPE>
+		<WIDTH>4</WIDTH>
+		<DEFAULT>100</DEFAULT>
+		<MIN>1</MIN>
+		<MAX>1000</MAX>
+		<HELP>Limit the number of rows returned.</HELP>
+	</PROPERTY>
+    
+    </ENTITY>
+</MODEL>

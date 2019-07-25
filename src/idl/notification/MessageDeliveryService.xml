@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<MODEL>
+    <IMPORT>java.util.HashMap</IMPORT>
+    <IMPORT>java.util.Map</IMPORT>
+    <IMPORT>java.util.ArrayList</IMPORT>
+    <IMPORT>java.util.List</IMPORT>
+    <IMPORT>com.redknee.app.crm.web.control.EntityOneRowSelectionWebControl</IMPORT>
+    <IMPORT>com.redknee.app.crm.bean.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.notification.*</IMPORT>
+    <IMPORT>com.redknee.app.crm.support.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.beans.xi.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.context.Context</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.holder.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.pipe.*</IMPORT>
+    <IMPORT>com.redknee.framework.msg.*</IMPORT>
+    <IMPORT>com.redknee.framework.xhome.webcontrol.*</IMPORT>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>SmsDeliveryService</NAME>
+        <LABEL>SMS Delivery Service</LABEL>
+        <IMPLEMENTS>MessageDeliveryService</IMPLEMENTS>
+        
+        <HELP>This service delivers SMS notification messages to an SMSC.</HELP>
+        
+        <PROPERTY>
+            <NAME>smppConfig</NAME>
+            <TYPE type="bean">com.redknee.app.crm.bean.SmppConfig</TYPE>
+            <HELP></HELP>
+        </PROPERTY>
+        
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>EmailDeliveryService</NAME>
+        <LABEL>E-Mail Delivery Service</LABEL>
+        <IMPLEMENTS>MessageDeliveryService</IMPLEMENTS>
+        
+        <HELP>This service delivers email notification messages to an SMTP server.</HELP>
+
+        <PROPERTY>
+            <NAME>defaultFrom</NAME>
+            <WIDTH>30000</WIDTH>
+            <DISPLAYWIDTH>15</DISPLAYWIDTH>
+            <HELP>Default from e-mail address.  Only used if non-empty and if no suitable from address is provided by the message.</HELP>
+        </PROPERTY>
+        
+        <PROPERTY>
+            <NAME>smtpConfig</NAME>
+            <TYPE type="bean">com.redknee.framework.msg.EmailConfig</TYPE>
+            <HELP></HELP>
+        </PROPERTY>
+
+        <PROPERTY required="y">
+            <NAME>defaultContentHandler</NAME>
+            <TYPE type="entity">MailContentHandler</TYPE>
+            <DEFAULT>com.redknee.framework.msg.TextMailContentHandler.instance()</DEFAULT>
+            <web-control>new EntityOneRowSelectionWebControl(MailContentHandler.class)</web-control>
+            <HELP>Default message content handler (i.e. HTML, plain-text, etc).  Only used if non-empty and if no suitable handler is provided by the message.</HELP>
+        </PROPERTY>
+
+        <PROPERTY>
+            <NAME>msgBoxGenerator</NAME>
+            <LABEL>MsgBox Generator</LABEL>
+            <postLabel>(* Advanced)</postLabel>
+            <TYPE type="entity">com.redknee.app.crm.delivery.email.MsgBoxFactory</TYPE>
+            <DEFAULT>com.redknee.app.crm.delivery.email.SMTPDeliveryCallbackMsgBox.Factory.instance()</DEFAULT>
+            <web-control>new EntityOneRowSelectionWebControl(com.redknee.app.crm.delivery.email.MsgBoxFactory.class).setOptional(true)</web-control>
+            <HELP>A factory that returns a FW com.redknee.framework.msg.MsgBox instance.</HELP>
+            <HIDDEN/>
+            <PERMISSION read="admin.redknee" write="admin.redknee"/>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>BinaryDeliveryService</NAME>
+        <LABEL>Binary Data Delivery Service</LABEL>
+        <IMPLEMENTS>MessageDeliveryService</IMPLEMENTS>
+        
+        <HELP>This service delivers binary notification messages (i.e. InputStream) to an OutputStream.</HELP>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>MessageDeliveryServiceProxy</NAME>
+        <IMPLEMENTS>MessageDeliveryService</IMPLEMENTS>
+        
+        <HELP>This service delivers notification messages to a delegate implementation.</HELP>
+        
+        <PROPERTY>
+            <NAME>delegate</NAME>
+            <TYPE type="entity">MessageDeliveryService</TYPE>
+            <web-control>new EntityOneRowSelectionWebControl(MessageDeliveryService.class).setOptional(true)</web-control>
+            <GetBody>
+                <![CDATA[
+                MessageDeliveryService delegate = delegate_;
+                if (delegate == null)
+                {
+                    delegate = NullMessageDeliveryService.instance();
+                }
+                return delegate;
+                ]]>
+            </GetBody>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>ConcurrentDeliveryService</NAME>
+        <EXTENDS>MessageDeliveryServiceProxy</EXTENDS>
+        
+        <HELP>This service delivers notification messages to a delegate implementation asynchronously using multiple threads.</HELP>
+        
+        <PROPERTY>
+            <NAME>pool</NAME>
+            <WIDTH>NotificationThreadPool.POOLNAME_WIDTH</WIDTH>
+            <web-control>new NotificationThreadPoolKeyWebControl()</web-control>
+        </PROPERTY>
+    </ENTITY>
+
+    <ENTITY abstract="true" generate-home="false" table-mode="all">
+        <PACKAGE>com.redknee.app.crm.notification.delivery</PACKAGE>
+        <PATH>delivery</PATH>
+        
+        <NAME>ThrottledDeliveryService</NAME>
+        <EXTENDS>MessageDeliveryServiceProxy</EXTENDS>
+        
+        <HELP>This service delivers notification messages to a delegate implementation at a limited rate.</HELP>
+        
+        <PROPERTY>
+            <NAME>throttle</NAME>
+            <TYPE type="bean">ThrottleInfo</TYPE>
+            <DEFAULT>new ThrottleInfo()</DEFAULT>
+        </PROPERTY>
+    </ENTITY>
+</MODEL>
