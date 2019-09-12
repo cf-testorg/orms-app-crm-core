@@ -2,7 +2,7 @@ buildscript {
     apply from: "${rootDir}/gradle/plugins.gradle"
 }
 
-apply plugin: 'redknee.unified'
+apply plugin: 'orms.unified'
 apply from: "${rootDir}/gradle/dependencies.gradle"
 
 deployProcessResources.doFirst {

@@ -5,17 +5,17 @@ dependencyManagement {
 }
 
 dependencies {
-    compileOnly 'redknee:framework'
-    testCompile 'redknee:framework'
-    testCompile 'redknee:test-support'
+    compileOnly 'com.optiva.orms:orms-framework'
+    testCompile 'com.optiva.orms:orms-framework'
+    testCompile 'com.optiva.orms:orms-test-support'
 
-    compile 'redknee:model-app-crm'
-    compile 'redknee:service-blackberry'
-    compile 'redknee:app-urcs-client'
-    compile 'redknee:interface-product-bundle-manager'
-    compile 'redknee:model-product-bundle-manager'
+    compile 'com.optiva.orms:orms-model-app-crm'
+    compile 'com.optiva.orms:orms-service-blackberry'
+    compile 'com.optiva.orms:orms-app-urcs-client'
+    compile 'com.optiva.orms:orms-interface-product-bundle-manager'
+    compile 'com.optiva.orms:orms-model-product-bundle-manager'
 
     compile 'jasperreports:jasperreports'
-    compile 'redknee:service-smsc-client'
-    compile 'redknee:protocol-smpp-common'
+    compile 'com.optiva.orms:orms-service-smsc'
+    compile 'com.optiva.orms:orms-protocol-smpp'
 }
