@@ -8,11 +8,11 @@ com.io7m.xom:xom:1.2.10
 com.jcraft:jsch:0.1.53
 com.jhlabs:filters:2.0.235
 com.novell.ldap:jldap:2009-10-07
-com.optiva.orms:orms-framework:0.1.0
-com.optiva.orms:orms-service-bootloader:0.1.0
-com.optiva.orms:orms-template-deploy:0.1.0
-com.optiva.orms:orms-template-web:0.1.0
-com.optiva.orms:orms-tool-bench:0.1.0
+com.optiva.orms:orms-framework:0.2.0-SNAPSHOT
+com.optiva.orms:orms-service-bootloader:0.2.0-SNAPSHOT
+com.optiva.orms:orms-template-deploy:0.2.0-SNAPSHOT
+com.optiva.orms:orms-template-web:0.2.0-SNAPSHOT
+com.optiva.orms:orms-tool-bench:0.2.0-SNAPSHOT
 com.trilead:trilead-ssh2:1.0.0-build215
 com.yahoo.platform.yui:yuicompressor:2.4.8
 commons-beanutils:commons-beanutils-core:1.8.3
